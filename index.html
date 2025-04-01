@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声优作品展示</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1> 水何澹澹 <span class="subtitle">- 独立声优作品集 </span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#portfolio">代表作品</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>用声音创造无限可能</h2>
+                <p>专业配音服务：动画、游戏、广告、纪录片</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://placehold.co/300x400" alt="声优照片">
+                </div>
+                <div class="about-text">
+                    <p id="profile-intro">专业独立声优，拥有超过10年的配音经验。曾为多部知名动画、游戏、广告和纪录片献声。</p>
+                    <p id="profile-characteristics">我的声线特点是清澈明亮，情感表现丰富，能够塑造从可爱少女到成熟女性的多种角色。</p>
+                    <p id="profile-languages">除了母语，我还能提供其他语言的配音服务，满足国际项目的需求。</p>
+                    <div class="voice-sample">
+                        <h3>声音示例：</h3>
+                        <div class="audio-player">
+                            <audio id="voice-sample" src="public/audio.wav"></audio>
+                            <div class="audio-controls">
+                                <button id="play-btn" class="play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <span class="time-display">00:00</span>
+                            </div>
+                            <canvas id="audio-visualizer" class="audio-visualizer"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">代表作品</h2>
+            
+            <!-- 年份导航 -->
+            <div class="year-navigation">
+                <!-- 将由JavaScript动态生成 -->
+            </div>
+            
+            <div class="timeline">
+                <!-- 作品列表将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">联系方式</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>email@example.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+86 123-456-7890</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-weibo"></i>
+                        <p>@水何澹澹</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-bilibili"></i>
+                        <p>@voice_水何澹澹</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>合作咨询</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">发送信息</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 水何澹澹 | 独立声优 | 保留所有权利</p>
+        </div>
+    </footer>
+
+    <!-- 先加载数据文件，再加载主脚本 -->
+    <script src="wave-effect.js"></script>
+    <script src="particles.js"></script>
+    <script src="audio-visualizer.js"></script>
+    <script src="parallax.js"></script>
+    <script src="data.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html> 
