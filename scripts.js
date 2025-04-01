@@ -144,7 +144,7 @@ function generateWorks() {
                 <h3>${work.title}</h3>
                 <div class="work-details">
                     <div class="work-image">
-                        <img src="${work.image}" alt="${work.title}" onerror="this.src='https://placehold.co/600x400?text=图片加载中'">
+                        <img src="${work.image}" alt="${work.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=图片加载中'">
                         ${work.link ? `<div class="image-overlay">
                             <a href="${work.link}" target="_blank" class="view-button">
                                 <i class="fas fa-external-link-alt"></i>
@@ -395,7 +395,7 @@ function showWorkDetail(work) {
             <div class="modal-year">${work.year}</div>
         </div>
         <div class="modal-image">
-            <img src="${work.image}" alt="${work.title}">
+            <img src="${work.image}" alt="${work.title}" loading="lazy">
         </div>
         <div class="modal-info">
             <div class="info-item">

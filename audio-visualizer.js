@@ -4,6 +4,9 @@ class AudioVisualizer {
         this.audioElement = document.getElementById('voice-sample');
         if (!this.audioElement) return;
         
+        // 设置音频为只有在用户交互时才加载
+        this.audioElement.preload = 'none';
+        
         this.playButton = document.getElementById('play-btn');
         this.canvas = document.getElementById('audio-visualizer');
         this.progressBar = document.querySelector('.progress-bar');
@@ -30,21 +33,18 @@ class AudioVisualizer {
     }
     
     setupEventListeners() {
+        if (!this.playButton || !this.audioElement) return;
+        
         this.playButton.addEventListener('click', () => {
-            if (!this.audioContext) {
-                this.initAudio();
+            // 如果是第一次点击播放，设置preload为auto以开始加载
+            if (this.audioElement.preload === 'none') {
+                this.audioElement.preload = 'auto';
             }
             
             if (this.isPlaying) {
-                this.audioElement.pause();
-                this.playButton.innerHTML = '<i class="fas fa-play"></i>';
-                this.isPlaying = false;
-                cancelAnimationFrame(this.animationId);
+                this.pauseAudio();
             } else {
-                this.audioElement.play();
-                this.playButton.innerHTML = '<i class="fas fa-pause"></i>';
-                this.isPlaying = true;
-                this.visualize();
+                this.playAudio();
             }
         });
         
