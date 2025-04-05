@@ -3,50 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>声优作品展示</title>
+    <title>水何澹澹 - 专业声优作品集</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 添加Apple风格的字体 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="public/favicon.ico" type="image/x-icon">
+    <meta name="description" content="水何澹澹 - 专业声优，为您的作品赋予独特声音。提供动画、游戏、广告等多种领域的配音服务。">
 </head>
 <body>
-    <header>
+    <!-- 添加页面加载过渡效果 -->
+    <div class="page-loader">
+        <div class="loader-icon"></div>
+    </div>
+
+    <header class="apple-header">
         <div class="container">
-            <h1> 水何澹澹 <span class="subtitle">- 独立声优作品集 </span></h1>
+            <h1 class="logo">水何澹澹 <span class="subtitle">Voice Artist</span></h1>
             <nav>
-                <ul>
-                    <li><a href="#about">关于我</a></li>
-                    <li><a href="#portfolio">代表作品</a></li>
-                    <li><a href="#contact">联系方式</a></li>
+                <button class="menu-toggle" aria-label="菜单">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link">关于我</a></li>
+                    <li><a href="#portfolio" class="nav-link">作品集</a></li>
+                    <li><a href="#contact" class="nav-link">联系方式</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section id="hero">
+    <section id="hero" class="apple-hero">
         <div class="container">
             <div class="hero-content">
-                <h2>用声音创造无限可能</h2>
-                <p>专业配音服务：动画、游戏、广告、纪录片</p>
+                <h2 class="hero-title">用声音创造无限可能</h2>
+                <p class="hero-subtitle">专业配音 · 感情演绎 · 多语言支持</p>
+                <div class="hero-cta">
+                    <a href="#portfolio" class="cta-button">查看作品</a>
+                    <a href="#contact" class="cta-link">联系合作 <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-element orbit">
+                    <div class="orbit-circle"></div>
+                    <div class="orbit-particle"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="apple-section">
         <div class="container">
             <h2 class="section-title">关于我</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="https://placehold.co/300x400" alt="声优照片" loading="lazy">
+                    <div class="image-frame">
+                        <img src="https://placehold.co/600x800" alt="声优照片" loading="lazy">
+                    </div>
                 </div>
                 <div class="about-text">
-                    <p id="profile-intro">专业独立声优，拥有超过10年的配音经验。曾为多部知名动画、游戏、广告和纪录片献声。</p>
-                    <p id="profile-characteristics">我的声线特点是清澈明亮，情感表现丰富，能够塑造从可爱少女到成熟女性的多种角色。</p>
-                    <p id="profile-languages">除了母语，我还能提供其他语言的配音服务，满足国际项目的需求。</p>
+                    <p id="profile-intro" class="large-text">专业独立声优，拥有超过10年的配音经验。曾为多部知名动画、游戏、广告和纪录片献声。</p>
+                    
+                    <div class="spec-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">声线特点</span>
+                            <p id="profile-characteristics">清澈明亮，情感表现丰富，能够塑造从可爱少女到成熟女性的多种角色。</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">语言能力</span>
+                            <p id="profile-languages">除了中文母语，我还能提供粤语、英语和法语的配音服务，满足国际项目的需求。</p>
+                        </div>
+                    </div>
+                    
                     <div class="voice-sample">
-                        <h3>声音示例：</h3>
-                        <div class="audio-player">
+                        <h3 class="sample-title">声音示例</h3>
+                        <div class="audio-player apple-player">
                             <audio id="voice-sample" src="public/audio.wav" preload="none"></audio>
                             <div class="audio-controls">
-                                <button id="play-btn" class="play-btn">
+                                <button id="play-btn" class="play-btn" aria-label="播放">
                                     <i class="fas fa-play"></i>
                                 </button>
                                 <div class="progress-container">
@@ -61,14 +106,45 @@
             </div>
         </div>
     </section>
+    
+    <!-- 添加服务板块 -->
+    <section id="services" class="apple-section services-section">
+        <div class="container">
+            <h2 class="section-title">专业服务</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-film"></i></div>
+                    <h3>影视配音</h3>
+                    <p>为电影、电视剧、纪录片等提供专业的角色配音和旁白服务。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-gamepad"></i></div>
+                    <h3>游戏配音</h3>
+                    <p>为游戏角色赋予生命力，提供多种情绪表现和场景对白。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-ad"></i></div>
+                    <h3>广告配音</h3>
+                    <p>为品牌广告提供富有感染力的声音，帮助传达品牌理念。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-book"></i></div>
+                    <h3>有声读物</h3>
+                    <p>为小说、儿童故事等提供沉浸式的有声阅读体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section id="portfolio">
+    <section id="portfolio" class="apple-section portfolio-section">
         <div class="container">
             <h2 class="section-title">代表作品</h2>
             
             <!-- 年份导航 -->
-            <div class="year-navigation">
-                <!-- 将由JavaScript动态生成 -->
+            <div class="filter-tabs">
+                <div class="year-navigation">
+                    <!-- 将由JavaScript动态生成 -->
+                </div>
             </div>
             
             <div class="timeline">
@@ -77,7 +153,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="apple-section contact-section">
         <div class="container">
             <h2 class="section-title">联系方式</h2>
             <div class="contact-content">
@@ -99,31 +175,49 @@
                         <p>@voice_水何澹澹</p>
                     </div>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form apple-form">
                     <h3>合作咨询</h3>
                     <form>
                         <div class="form-group">
+                            <input type="text" id="name" name="name" required class="form-control">
                             <label for="name">姓名</label>
-                            <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
+                            <input type="email" id="email" name="email" required class="form-control">
                             <label for="email">邮箱</label>
-                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
+                            <textarea id="message" name="message" rows="5" required class="form-control"></textarea>
                             <label for="message">留言</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn">发送信息</button>
+                        <button type="submit" class="btn submit-btn">发送信息</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
+    <footer class="apple-footer">
         <div class="container">
-            <p>&copy; 2023 水何澹澹 | 独立声优 | 保留所有权利</p>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>水何澹澹</h3>
+                    <p>专业声优</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#about">关于我</a>
+                    <a href="#portfolio">作品集</a>
+                    <a href="#contact">联系方式</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="微博"><i class="fab fa-weibo"></i></a>
+                    <a href="#" aria-label="哔哩哔哩"><i class="fab fa-bilibili"></i></a>
+                    <a href="#" aria-label="微信"><i class="fab fa-weixin"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 水何澹澹 | 专业独立声优 | 保留所有权利</p>
+            </div>
         </div>
     </footer>
 
@@ -134,5 +228,8 @@
     <script src="parallax.js"></script>
     <script src="data.js"></script>
     <script src="scripts.js"></script>
+    
+    <!-- 添加Apple风格的JS交互 -->
+    <script src="apple-effects.js"></script>
 </body>
 </html> 

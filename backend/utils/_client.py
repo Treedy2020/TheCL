@@ -1,8 +1,9 @@
 import os
+from typing import Optional
 import requests
 import json
 import base64
-from backend.utils.general_func import encode_audio_file
+from utils.general_func import encode_audio_file
 
 import uuid
 
@@ -71,23 +72,23 @@ class Client:
         response = requests.post(url, headers=headers, json=body)
         return response.json()
 
-    def tts_http(self, text: str, output_file: str, spk_id: str):
+    def tts_http(self, text: str, spk_id: str, filename: Optional[str] = None) -> None | bytes:
         """Call TTS HTTP API to convert text to speech
 
         Args:
             text (str): Text content to be converted
-            output_file (str): Path to output audio file
-            spk_id (str): Speaker ID to specify the voice
+            spk_id (str): Speaker ID to specify the voice.
+            filename (str): Path to output audio file, if not provided, will directly return the bytes.
 
         Returns:
-            None
+            None | bytes: If filename is not provided, will directly return the bytes.
 
         Raises:
             Exception: When API request fails
             
         Example:
             >>> client = Client()
-            >>> client.tts_http("Hello world", "output.mp3", "speaker_123")
+            >>> client.tts_http("Hello world", "speaker_123")
         """
         api_url = self.host + "/api/v1/tts"
         header = {"Authorization": f"Bearer;{self.access_token}"}
@@ -122,13 +123,16 @@ class Client:
             resp = requests.post(api_url, json.dumps(request_json), headers=header)
             if "data" in resp.json():
                 data = resp.json()["data"]
-                file_to_save = open(output_file, "wb")
-                file_to_save.write(base64.b64decode(data))
+                if filename:
+                    with open(filename, "wb") as f:
+                        f.write(base64.b64decode(data))
+                else:
+                    return base64.b64decode(data)
         except Exception as e:
-            e.with_traceback()
+            raise Exception("tts请求错误:" + e.with_traceback())
 
 
 
 if __name__ == "__main__":
     client = Client()
-    print(client.tts_http("我喜欢你的激进中那种无谓失败的自信，像盛夏的阳光，敢去世界上所有地方。", "output.mp3", "S_pA3TM7Qn1"))
+    print(client.tts_http("我喜欢你的激进中那种无谓失败的自信，像盛夏的阳光，敢去世界上所有地方。", "S_pA3TM7Qn1"))
