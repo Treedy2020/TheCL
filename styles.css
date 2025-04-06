@@ -1061,4 +1061,217 @@ body.modal-open {
 .type-btn[data-type="all"].active {
     background-color: var(--primary-color);
     color: white;
+}
+
+/* AI试音板块样式 */
+.ai-voice-section {
+    background-color: var(--apple-light-gray);
+}
+
+.ai-voice-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 18px;
+    margin-top: -40px;
+    margin-bottom: 30px;
+    color: var(--apple-gray);
+}
+
+.voice-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    resize: none;
+    background-color: white;
+}
+
+.voice-textarea:focus {
+    border-color: var(--apple-primary);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+}
+
+.character-counter {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    font-size: 14px;
+    color: var(--apple-gray);
+}
+
+.voice-options {
+    margin: 20px 0;
+}
+
+.option-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--apple-dark);
+}
+
+.voice-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.voice-option {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.voice-option.active {
+    background-color: var(--apple-primary);
+    color: white;
+    border-color: var(--apple-primary);
+    box-shadow: 0 2px 5px rgba(0, 122, 255, 0.3);
+}
+
+.ai-submit-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, var(--apple-primary), var(--apple-secondary));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 122, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+}
+
+.ai-submit-btn:disabled {
+    background: linear-gradient(135deg, #a0a0a0, #c0c0c0);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.ai-submit-btn.loading .btn-text {
+    visibility: hidden;
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    display: none;
+}
+
+.ai-submit-btn.loading .btn-loader {
+    display: block;
+}
+
+.limit-info {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--apple-gray);
+}
+
+.cooldown-timer {
+    color: var(--apple-accent);
+    font-weight: 500;
+}
+
+.voice-result-area {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.result-status {
+    text-align: center;
+    color: var(--apple-gray);
+    font-size: 16px;
+}
+
+.result-status.error {
+    color: var(--apple-accent);
+}
+
+.result-status.success {
+    color: #34c759;
+}
+
+.voice-player-container {
+    margin-top: 30px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.voice-player-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.result-player {
+    margin-bottom: 20px;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--apple-light-gray);
+    color: var(--apple-primary);
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.download-btn:hover {
+    background-color: var(--apple-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .ai-voice-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .voice-result-area {
+        min-height: 200px;
+    }
 } 

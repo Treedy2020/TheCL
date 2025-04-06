@@ -140,15 +140,79 @@
         <div class="container">
             <h2 class="section-title">代表作品</h2>
             
-            <!-- 年份导航 -->
             <div class="filter-tabs">
                 <div class="year-navigation">
-                    <!-- 将由JavaScript动态生成 -->
                 </div>
             </div>
             
             <div class="timeline">
-                <!-- 作品列表将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-voice" class="apple-section ai-voice-section">
+        <div class="container">
+            <h2 class="section-title">AI 声音试听</h2>
+            <p class="section-subtitle">输入文本，体验专业配音效果</p>
+            
+            <div class="ai-voice-container">
+                <div class="voice-input-area">
+                    <div class="form-group">
+                        <textarea id="voice-text" class="form-control voice-textarea" 
+                            placeholder=" " maxlength="300"></textarea>
+                        <label for="voice-text">输入20-300字的文本内容</label>
+                        <div class="character-counter">
+                            <span id="char-count">0</span>
+                            <span>/300</span>
+                        </div>
+                    </div>
+                    
+                    <div class="voice-options">
+                        <div class="option-group">
+                            <label class="option-label">声音类型</label>
+                            <div class="voice-selector">
+                                <button class="voice-option active" data-speaker="1">成熟女声</button>
+                                <button class="voice-option" data-speaker="2">清新女声</button>
+                                <button class="voice-option" data-speaker="3">温柔女声</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="generate-voice" class="ai-submit-btn" disabled>
+                        <span class="btn-text">生成试音</span>
+                        <div class="btn-loader"></div>
+                    </button>
+                    
+                    <div class="limit-info">
+                        <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
+                        <div id="cooldown-timer" class="cooldown-timer"></div>
+                    </div>
+                </div>
+                
+                <div class="voice-result-area">
+                    <div id="result-status" class="result-status">
+                    </div>
+                    
+                    <div id="voice-player-container" class="voice-player-container hidden">
+                        <div class="apple-player result-player">
+                            <audio id="result-audio" src="" preload="none"></audio>
+                            <div class="player-controls">
+                                <button id="result-play-btn" class="play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <span class="time-display">00:00</span>
+                            </div>
+                        </div>
+                        
+                        <a id="download-link" class="download-btn" download>
+                            <i class="fas fa-download"></i>
+                            <span>下载音频</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -231,5 +295,6 @@
     
     <!-- 添加Apple风格的JS交互 -->
     <script src="apple-effects.js"></script>
+    <script src="ai-voice.js"></script>
 </body>
 </html> 
