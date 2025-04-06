@@ -1274,4 +1274,126 @@ body.modal-open {
     .voice-result-area {
         min-height: 200px;
     }
+}
+
+/* Tab样式 */
+.tabs-container {
+    margin-top: 2rem;
+}
+
+.tabs-header {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    padding: 0.8rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 1rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    color: #000;
+}
+
+.tab-btn.active {
+    color: #0066cc;
+    border-bottom: 2px solid #0066cc;
+    font-weight: 500;
+}
+
+.tab-content {
+    position: relative;
+}
+
+.tab-pane {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tab-pane.active {
+    display: block;
+    opacity: 1;
+}
+
+/* 共享播放器样式 */
+.shared-player-container {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.player-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.shared-player {
+    margin-bottom: 1rem;
+}
+
+.player-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: #f5f5f7;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    background: #e5e5e7;
+}
+
+.sample-btn {
+    background: #e8f0fe;
+    color: #0066cc;
+}
+
+.sample-btn:hover {
+    background: #d0e0fc;
+}
+
+.download-btn {
+    background: #f0f0f0;
+}
+
+.download-btn:hover {
+    background: #e0e0e0;
+}
+
+/* 优化结果状态显示 */
+.result-status-container {
+    margin-top: 1rem;
+}
+
+/* 调整AI声音容器在Tab中的样式 */
+#ai-voice-tab .ai-voice-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#ai-voice-tab .voice-input-area {
+    width: 100%;
+    max-width: none;
 } 
