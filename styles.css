@@ -31,9 +31,10 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 15px;
+    width: 100%;
 }
 
 a {
@@ -362,7 +363,11 @@ audio {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    position: relative;
 }
 
 .form-group label {
@@ -374,10 +379,19 @@ audio {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
     font-family: inherit;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
 }
 
 .btn {
@@ -587,357 +601,371 @@ footer {
     color: var(--primary-color);
 }
 
-/* 添加音频可视化相关样式 */
-.audio-player {
-    width: 100%;
-    background: rgba(245, 246, 250, 0.8);
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.audio-controls {
+/* 播放按钮样式增强 */
+.play-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(145deg, #0066cc, #0088ff);
+    color: white;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 
+        0 6px 20px rgba(0, 102, 204, 0.3),
+        inset 0 2px 6px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    animation: pulse 2s infinite;
+}
+
+.play-btn i {
+    font-size: 24px;
+    color: white;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* 改进的播放状态呼吸光效 */
+@keyframes playPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 170, 102, 0.7);
+        transform: scale(1);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(0, 170, 102, 0);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 170, 102, 0);
+        transform: scale(1);
+    }
+}
+
+.play-btn.playing {
+    animation: none;
+    background: #0062c2;
+}
+
+.play-btn.playing i {
+    transform: scale(0.9);
+}
+
+/* 音频可视化器样式优化 */
+.audio-visualizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 16px;
+    backdrop-filter: blur(2px);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(to bottom, rgba(240, 249, 255, 0.7), rgba(220, 234, 255, 0.5));
+    animation: backgroundPulse 15s infinite alternate;
+    mix-blend-mode: hard-light;
+}
+
+@keyframes backgroundPulse {
+    0% {
+        background-color: rgba(240, 249, 255, 0.4);
+    }
+    50% {
+        background-color: rgba(230, 244, 255, 0.5);
+    }
+    100% {
+        background-color: rgba(235, 245, 250, 0.4);
+    }
+}
+
+/* 播放器容器样式优化 */
+.shared-player {
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.08),
+        inset 0 0 1px rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.shared-player:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        inset 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.player-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.player-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 播放控制区域样式 */
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    width: 70px;
+    padding-top: 10px;
 }
 
 .play-btn {
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: #0071e3;
     color: white;
     border: none;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 15px;
-    transition: transform 0.2s, background 0.3s;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    animation: pulse 2s infinite;
 }
 
 .play-btn:hover {
-    background: var(--secondary-color);
-    transform: scale(1.05);
-}
-
-.progress-container {
-    flex: 1;
-    height: 6px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    margin-right: 10px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: var(--accent-color);
-    width: 0;
-    border-radius: 3px;
-    transition: width 0.1s linear;
+    background: #0077ed;
+    transform: scale(1.1);
 }
 
 .time-display {
-    font-size: 14px;
-    color: var(--dark-color);
-    font-weight: 500;
+    font-size: 12px;
+    color: #636366;
+    font-weight: 400;
 }
 
-.audio-visualizer {
-    width: 100%;
-    height: 80px;
-    background: transparent;
-    border-radius: 8px;
-}
-
-/* 添加平滑页面过渡效果的CSS */
-@keyframes fadeUpIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in-element {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.fade-in-element.visible {
-    animation: fadeUpIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-/* 为不同元素设置不同延迟 */
-.fade-delay-1 { animation-delay: 0.1s; }
-.fade-delay-2 { animation-delay: 0.2s; }
-.fade-delay-3 { animation-delay: 0.3s; }
-.fade-delay-4 { animation-delay: 0.4s; }
-.fade-delay-5 { animation-delay: 0.5s; }
-
-/* 作品链接样式 */
-.work-link-container {
-    margin-top: 15px;
-}
-
-.work-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    box-shadow: 0 3px 10px rgba(108, 92, 231, 0.2);
-}
-
-.work-link:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-}
-
-.work-link span {
-    margin-right: 8px;
-}
-
-.work-link i {
-    transition: transform 0.3s ease;
-}
-
-.work-link:hover i {
-    transform: translateX(4px);
-}
-
-/* 图片悬停效果 */
-.work-image {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(108, 92, 231, 0.7);
+/* 输入区域重新布局 */
+.voice-input-area {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    width: 100%;
+    align-items: flex-start;
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.work-image:hover .image-overlay {
-    opacity: 1;
-}
-
-.view-button {
-    width: 50px;
-    height: 50px;
-    background: white;
-    border-radius: 50%;
+/* 表单组样式优化 */
+.form-group {
+    flex: 1 1 auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-}
-
-.work-image:hover .view-button {
-    transform: scale(1);
-}
-
-/* 可点击卡片样式 */
-.work-content.clickable {
-    cursor: pointer;
+    flex-direction: column;
+    min-height: 200px;
     position: relative;
 }
 
-.work-content.clickable::after {
-    content: '';
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    background-color: var(--secondary-color);
-    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>');
-    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>');
-    mask-size: cover;
-    -webkit-mask-size: cover;
-    opacity: 0.6;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.work-content.clickable:hover::after {
-    opacity: 1;
-}
-
-/* 模态对话框样式 */
-.work-detail-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* 美化输入框样式 */
+.voice-textarea {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    min-height: 180px;
+    flex-grow: 1;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+    border: 1px solid #d1d1d6;
+    border-radius: 12px;
+    resize: vertical;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    margin-bottom: 55px;
 }
 
-.work-detail-modal.active {
-    opacity: 1;
-    visibility: visible;
+.voice-textarea:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+    outline: none;
 }
 
-.modal-content {
-    position: relative;
-    width: 90%;
-    max-width: 900px;
-    max-height: 90vh;
-    background: white;
-    border-radius: 10px;
-    padding: 30px;
-    overflow-y: auto;
-    transform: translateY(30px);
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.work-detail-modal.active .modal-content {
-    transform: translateY(0);
-}
-
-.close-modal {
+/* 输入框标签优化 */
+.form-group label {
     position: absolute;
     top: 15px;
-    right: 20px;
-    font-size: 28px;
-    color: var(--dark-color);
-    cursor: pointer;
-    transition: color 0.3s;
+    left: 15px;
+    font-size: 16px;
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: transparent;
+    padding: 0 5px;
 }
 
-.close-modal:hover {
-    color: var(--primary-color);
+.voice-textarea:focus + label,
+.voice-textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 14px;
+    color: #0066cc;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.modal-header {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 15px;
-    position: relative;
-}
-
-.modal-tag {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.modal-year {
+/* 字符计数器样式优化 */
+.character-counter {
     position: absolute;
-    right: 0;
-    top: 0;
-    background: var(--primary-color);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: bold;
+    bottom: 65px;
+    right: 15px;
+    font-size: 12px;
+    color: #636366;
+    background-color: rgba(242, 242, 247, 0.8);
+    padding: 3px 8px;
+    border-radius: 10px;
+    z-index: 1;
 }
 
-.modal-image {
+/* 语音选项区域优化 - 移至顶部 */
+.voice-options {
     width: 100%;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    padding: 0;
+    order: -1; /* 确保它在顶部 */
 }
 
-.modal-image img {
-    width: 100%;
-    height: auto;
+.option-label {
+    font-size: 15px;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 8px;
     display: block;
 }
 
-.modal-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.info-item {
-    margin-bottom: 20px;
-}
-
-.info-item h3 {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-.modal-actions {
-    grid-column: 1 / -1;
+/* 语音选择器按钮美化 */
+.voice-selector {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
-.modal-link {
-    display: inline-flex;
+.voice-option {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(200, 220, 240, 0.5);
+    background: rgba(255, 255, 255, 0.7);
+    color: #666;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.voice-option:hover {
+    background: rgba(230, 240, 255, 0.8);
+    border-color: rgba(0, 102, 204, 0.3);
+}
+
+.voice-option.active {
+    background: linear-gradient(to bottom, rgba(0, 102, 204, 0.1), rgba(0, 120, 255, 0.15));
+    border-color: rgba(0, 102, 204, 0.5);
+    color: #0066cc;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 102, 204, 0.1);
+}
+
+/* 调整按钮容器位置和布局 */
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+    z-index: 1;
+}
+
+/* 让所有按钮尺寸一致 */
+.action-btn, .ai-submit-btn {
+    display: flex;
     align-items: center;
-    padding: 12px 30px;
-    background-color: var(--primary-color);
+    justify-content: center;
+    gap: 5px;
+    padding: 0 15px;
+    min-width: 90px;
+    height: 36px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+/* 示例按钮样式 */
+.sample-btn {
+    background: #e8f0fe;
+    color: #0066cc;
+}
+
+/* 下载按钮样式 */
+.download-btn {
+    background: #f0f0f0;
+    color: #444;
+}
+
+/* 生成按钮样式 */
+.ai-submit-btn {
+    background: linear-gradient(to bottom, #0077e6, #0066cc);
     color: white;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
 }
 
-.modal-link:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+/* 按钮悬停效果统一 */
+.action-btn:hover, .ai-submit-btn:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-.modal-link i {
-    margin-left: 10px;
+/* 禁用状态 */
+.ai-submit-btn:disabled {
+    background: linear-gradient(135deg, #a0a0a0, #c0c0c0);
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
 }
 
-body.modal-open {
-    overflow: hidden;
-}
-
-@media (max-width: 768px) {
-    .modal-content {
-        padding: 20px;
-    }
-    
-    .modal-info {
-        grid-template-columns: 1fr;
-    }
+/* 按钮容器位置调整 */
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+    z-index: 1;
 }
 
 /* 为作品类型筛选按钮添加样式 - 如果您实现了按类型筛选功能 */
@@ -1068,12 +1096,6 @@ body.modal-open {
     background-color: var(--apple-light-gray);
 }
 
-.ai-voice-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 50px;
-}
 
 .section-subtitle {
     text-align: center;
@@ -1193,12 +1215,10 @@ body.modal-open {
 }
 
 .limit-info {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: var(--apple-gray);
+    margin-top: 10px;
+    padding: 0 10px;
+    font-size: 13px;
+    color: #636366;
 }
 
 .cooldown-timer {
@@ -1325,19 +1345,20 @@ body.modal-open {
 
 /* 共享播放器样式 */
 .shared-player-container {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.apple-player.shared-player {
+    padding: 25px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .player-title {
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: #333;
-}
-
-.shared-player {
-    margin-bottom: 1rem;
 }
 
 .player-actions {
@@ -1384,16 +1405,169 @@ body.modal-open {
 
 /* 优化结果状态显示 */
 .result-status-container {
-    margin-top: 1rem;
+    margin-top: 10px;
+    padding: 0 10px;
 }
 
-/* 调整AI声音容器在Tab中的样式 */
-#ai-voice-tab .ai-voice-container {
-    display: flex;
-    flex-direction: column;
-}
-
-#ai-voice-tab .voice-input-area {
+.voice-input-area {
     width: 100%;
     max-width: none;
 } 
+.player-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.audio-visualizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* 这确保Canvas不会捕获点击事件 */
+}
+
+.player-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.player-controls {
+    position: relative;
+    z-index: 3; /* 更高的z-index确保按钮可点击 */
+}
+
+.play-btn {
+    position: relative;
+    z-index: 4; /* 给按钮设置最高的z-index */
+    cursor: pointer;
+}
+
+/* 确保其他元素也有正确的z-index */
+.voice-input-area, .voice-options, 
+.ai-submit-btn, .player-actions, .limit-info, .result-status-container {
+    position: relative;
+    z-index: 3;
+}
+
+/* 按钮外部容器 */
+.buttons-outer-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+/* 生成按钮加载动画 */
+.btn-loader {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s infinite linear;
+    margin-left: 5px;
+}
+
+.ai-submit-btn.loading .btn-text {
+    display: none;
+}
+
+.ai-submit-btn.loading .btn-loader {
+    display: block;
+}
+
+/* 生成等待提示 */
+.generating-timer {
+    margin-top: 10px;
+    padding: 0 10px;
+    text-align: right;
+    font-size: 13px;
+    color: #8e8e93;
+}
+
+.generating .generating-timer {
+    display: block;
+}
+
+/* 为播放按钮添加呼吸效果 */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.7);
+        transform: scale(1);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 113, 227, 0);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 113, 227, 0);
+        transform: scale(1);
+    }
+}
+
+/* 优化音频输入区布局 */
+.voice-input-area {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+/* 修改播放控件样式 - 垂直布局并靠左 */
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px; /* 与文本框顶部对齐 */
+}
+
+/* 播放按钮样式优化 */
+.play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #0071e3;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    animation: pulse 2s infinite;
+}
+
+.play-btn:hover {
+    background: #0077ed;
+    transform: scale(1.1);
+}
+
+/* 播放按钮激活状态停止动画 */
+.play-btn.playing {
+    animation: none;
+    background: #0062c2;
+}
+
+/* 时间显示样式优化 */
+.time-display {
+    font-size: 13px;
+    color: #666;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* 确保表单组撑满剩余空间 */
+.form-group {
+    flex: 1;
+}

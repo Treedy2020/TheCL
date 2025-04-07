@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException, status, Body
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
+from fastapi.responses import StreamingResponse
+import httpx
 
 from dependencies import client, oss_service
 from utils.general_func import precheck_text
@@ -86,3 +88,20 @@ async def clone_voice(request: CloneVoiceRequest):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
+
+
+@app.get("/proxy-audio")
+async def proxy_audio(url: str):
+    """代理音频文件以避免混合内容问题"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, follow_redirects=True)
+            return StreamingResponse(
+                content=response.aiter_bytes(),
+                media_type="audio/mpeg",
+                headers={
+                    "Content-Disposition": f"attachment; filename=audio.mp3"
+                }
+            )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"代理请求失败: {str(e)}")

@@ -6,14 +6,11 @@
     <title>水何澹澹 - 专业声优作品集</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 添加Apple风格的字体 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap">
-    <!-- 添加网站图标 -->
     <link rel="icon" href="public/favicon.ico" type="image/x-icon">
     <meta name="description" content="水何澹澹 - 专业声优，为您的作品赋予独特声音。提供动画、游戏、广告等多种领域的配音服务。">
 </head>
 <body>
-    <!-- 添加页面加载过渡效果 -->
     <div class="page-loader">
         <div class="loader-icon"></div>
     </div>
@@ -33,72 +30,7 @@
             </nav>
         </div>
     </header>
-    <section id="ai-voice" class="apple-section ai-voice-section">
-        <div class="container">
-            <h2 class="section-title">AI 声音试听</h2>
-            <p class="section-subtitle">输入文本，体验专业配音效果</p>
-            
-            <div class="ai-voice-container">
-                <div class="voice-input-area">
-                    <div class="form-group">
-                        <textarea id="voice-text" class="form-control voice-textarea" 
-                            placeholder=" " maxlength="300"></textarea>
-                        <label for="voice-text">输入20-300字的文本内容</label>
-                        <div class="character-counter">
-                            <span id="char-count">0</span>
-                            <span>/300</span>
-                        </div>
-                    </div>
-                    
-                    <div class="voice-options">
-                        <div class="option-group">
-                            <label class="option-label">声音类型</label>
-                            <div class="voice-selector">
-                                <button class="voice-option active" data-speaker="1">成熟女声</button>
-                                <button class="voice-option" data-speaker="2">清新女声</button>
-                                <button class="voice-option" data-speaker="3">温柔女声</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button id="generate-voice" class="ai-submit-btn" disabled>
-                        <span class="btn-text">生成试音</span>
-                        <div class="btn-loader"></div>
-                    </button>
-                    
-                    <div class="limit-info">
-                        <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
-                        <div id="cooldown-timer" class="cooldown-timer"></div>
-                    </div>
-                </div>
-                
-                <div class="voice-result-area">
-                    <div id="result-status" class="result-status">
-                    </div>
-                    
-                    <div id="voice-player-container" class="voice-player-container hidden">
-                        <div class="apple-player result-player">
-                            <audio id="result-audio" src="" preload="none"></audio>
-                            <div class="player-controls">
-                                <button id="result-play-btn" class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </button>
-                                <div class="progress-container">
-                                    <div class="progress-bar"></div>
-                                </div>
-                                <span class="time-display">00:00</span>
-                            </div>
-                        </div>
-                        
-                        <a id="download-link" class="download-btn" download>
-                            <i class="fas fa-download"></i>
-                            <span>下载音频</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <section id="hero" class="apple-hero">
         <div class="container">
             <div class="hero-content">
@@ -116,6 +48,7 @@
                 </div>
             </div>
         </div>
+
         <div class="scroll-indicator">
             <div class="mouse">
                 <div class="wheel"></div>
@@ -130,116 +63,101 @@
 
     <section id="about" class="apple-section">
         <div class="container">
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <button class="tab-btn active" data-tab="profile">关于我</button>
-                    <button class="tab-btn" data-tab="ai-voice">AI 声音试听</button>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="image-frame">
+                        <img src="https://placehold.co/600x800" alt="声优照片" loading="lazy">
+                    </div>
                 </div>
-                
-                <div class="tab-content">
-                    <!-- 关于我 Tab 内容 -->
-                    <div class="tab-pane active" id="profile-tab">
-                        <div class="about-content">
-                            <div class="about-image">
-                                <div class="image-frame">
-                                    <img src="https://placehold.co/600x800" alt="声优照片" loading="lazy">
-                                </div>
-                            </div>
-                            <div class="about-text">
-                                <p id="profile-intro" class="large-text">专业独立声优，拥有超过10年的配音经验。曾为多部知名动画、游戏、广告和纪录片献声。</p>
-                                
-                                <div class="spec-grid">
-                                    <div class="spec-item">
-                                        <span class="spec-label">声线特点</span>
-                                        <p id="profile-characteristics">清澈明亮，情感表现丰富，能够塑造从可爱少女到成熟女性的多种角色。</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <span class="spec-label">语言能力</span>
-                                        <p id="profile-languages">除了中文母语，我还能提供粤语、英语和法语的配音服务，满足国际项目的需求。</p>
-                                    </div>
+                <div class="about-text">
+                    <p id="profile-intro" class="large-text">专业独立声优，拥有超过10年的配音经验。曾为多部知名动画、游戏、广告和纪录片献声。</p>
+                    
+                    <div class="spec-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">声线特点</span>
+                            <p id="profile-characteristics">清澈明亮，情感表现丰富，能够塑造从可爱少女到成熟女性的多种角色。</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">语言能力</span>
+                            <p id="profile-languages">除了中文母语，我还能提供粤语、英语和法语的配音服务，满足国际项目的需求。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="audio-player" class="shared-player-container">
+            <div class="apple-player shared-player">
+                <audio id="shared-audio" preload="metadata"></audio>
+                <div class="player-wrapper">
+                    <canvas id="audio-visualizer" class="audio-visualizer"></canvas>
+                    <div class="player-content">
+                        <!-- 声音类型选择 - 移到顶部 -->
+                        <div class="voice-options">
+                            <div class="option-group">
+                                <label class="option-label">声音类型</label>
+                                <div class="voice-selector">
+                                    <button class="voice-option active" data-speaker="1">成熟女声</button>
+                                    <button class="voice-option" data-speaker="2">清新女声</button>
+                                    <button class="voice-option" data-speaker="3">温柔女声</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- AI试音 Tab 内容 -->
-                    <div class="tab-pane" id="ai-voice-tab">
-                        <div class="ai-voice-container">
-                            <div class="voice-input-area">
-                                <div class="form-group">
-                                    <textarea id="voice-text" class="form-control voice-textarea" 
-                                        placeholder=" " maxlength="300"></textarea>
-                                    <label for="voice-text">输入20-300字的文本内容</label>
-                                    <div class="character-counter">
-                                        <span id="char-count">0</span>
-                                        <span>/300</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="voice-options">
-                                    <div class="option-group">
-                                        <label class="option-label">声音类型</label>
-                                        <div class="voice-selector">
-                                            <button class="voice-option active" data-speaker="1">成熟女声</button>
-                                            <button class="voice-option" data-speaker="2">清新女声</button>
-                                            <button class="voice-option" data-speaker="3">温柔女声</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button id="generate-voice" class="ai-submit-btn" disabled>
-                                    <span class="btn-text">生成试音</span>
-                                    <div class="btn-loader"></div>
+                        
+                        <div class="voice-input-area">
+                            <div class="player-controls">
+                                <button id="shared-play-btn" class="play-btn tooltip" data-tooltip="播放/暂停">
+                                    <i class="fas fa-play"></i>
                                 </button>
-                                
-                                <div class="limit-info">
-                                    <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
-                                    <div id="cooldown-timer" class="cooldown-timer"></div>
+                                <span class="time-display">00:00</span>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea id="voice-text" class="form-control voice-textarea" 
+                                    placeholder="你想让我对你说点什么呢？" maxlength="300"></textarea>
+                                <div class="character-counter">
+                                    <span id="char-count">0</span>
+                                    <span>/300</span>
                                 </div>
                                 
-                                <div class="result-status-container">
-                                    <div id="result-status" class="result-status">
-                                        在上方输入文本，点击"生成试音"按钮体验AI声音合成
-                                    </div>
+                                <!-- 按钮组放在输入框内部右下角 -->
+                                <div class="button-container">
+                                    <!-- 示例按钮放左边 -->
+                                    <button id="sample-voice-btn" class="action-btn sample-btn tooltip" data-tooltip="播放我的示例配音">
+                                        <i class="fas fa-microphone"></i>
+                                        <span>示例</span>
+                                    </button>
+
+                                    <a id="download-link" class="action-btn download-btn tooltip" data-tooltip="下载当前音频" download>
+                                        <i class="fas fa-download"></i>
+                                        <span>下载</span>
+                                    </a>
+                                    <!-- 生成按钮放最右边 -->
+                                    <button id="generate-voice" class="ai-submit-btn tooltip" data-tooltip="生成文本对应的AI配音" disabled>
+                                        <span class="btn-text">生成</span>
+                                        <div class="btn-loader"></div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- 共用的音频播放器 -->
-                <div class="shared-player-container">
-                    <h3 class="player-title">声音播放</h3>
-                    <div class="apple-player shared-player">
-                        <audio id="shared-audio" src="" preload="none"></audio>
-                        <div class="player-controls">
-                            <button id="shared-play-btn" class="play-btn">
-                                <i class="fas fa-play"></i>
-                            </button>
-                            <div class="progress-container">
-                                <div class="progress-bar"></div>
-                            </div>
-                            <span class="time-display">00:00</span>
+                        
+                        <!-- 剩余次数和结果状态 -->
+                        <div class="limit-info">
+                            <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
+                            <div id="cooldown-timer" class="cooldown-timer"></div>
                         </div>
-                        <canvas id="audio-visualizer" class="audio-visualizer"></canvas>
-                    </div>
-                    
-                    <div class="player-actions">
-                        <button id="sample-voice-btn" class="action-btn sample-btn">
-                            <i class="fas fa-microphone"></i>
-                            <span>播放个人示例</span>
-                        </button>
-                        <a id="download-link" class="action-btn download-btn" download>
-                            <i class="fas fa-download"></i>
-                            <span>下载音频</span>
-                        </a>
+                        
+                        <div class="result-status-container">
+                            <div id="result-status" class="result-status"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     
-    <!-- 添加服务板块 -->
+    <!-- Services -->
     <section id="services" class="apple-section services-section">
         <div class="container">
             <h2 class="section-title">专业服务</h2>
@@ -360,7 +278,11 @@
     <script src="data.js"></script>
     <script src="scripts.js"></script>
     <script src="tabs.js"></script>
-    <script src="apple-effects.js"></script>
     <script src="ai-voice.js"></script>
+
+    <!-- 添加生成计时器 -->
+    <div class="generating-timer" id="generation-timer">
+        预计需要 30 秒
+    </div>
 </body>
 </html> 
