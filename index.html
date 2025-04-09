@@ -66,7 +66,7 @@
             <div class="about-content">
                 <div class="about-image">
                     <div class="image-frame">
-                        <img src="https://placehold.co/600x800" alt="声优照片" loading="lazy">
+                        <img src="public/self.jpeg" alt="声优照片" loading="lazy">
                     </div>
                 </div>
                 <div class="about-text">
@@ -92,7 +92,7 @@
                 <div class="player-wrapper">
                     <canvas id="audio-visualizer" class="audio-visualizer"></canvas>
                     <div class="player-content">
-                        <!-- 声音类型选择 - 移到顶部 -->
+                        <!-- Voice Options -->
                         <div class="voice-options">
                             <div class="option-group">
                                 <label class="option-label">声音类型</label>
@@ -113,16 +113,16 @@
                             </div>
 
                             <div class="form-group">
-                                <textarea id="voice-text" class="form-control voice-textarea" 
-                                    placeholder="你想让我对你说点什么呢？" maxlength="300"></textarea>
-                                <div class="character-counter">
-                                    <span id="char-count">0</span>
-                                    <span>/300</span>
+                                <div class="input-container">
+                                    <textarea id="voice-text" class="form-control voice-textarea" 
+                                        placeholder="你想让我对你说点什么呢？" maxlength="300">
+                                    </textarea>
+                                    <div class="character-counter">
+                                        <span id="char-count">0</span>
+                                        <span>/300</span>
+                                    </div>
                                 </div>
-                                
-                                <!-- 按钮组放在输入框内部右下角 -->
                                 <div class="button-container">
-                                    <!-- 示例按钮放左边 -->
                                     <button id="sample-voice-btn" class="action-btn sample-btn tooltip" data-tooltip="播放我的示例配音">
                                         <i class="fas fa-microphone"></i>
                                         <span>示例</span>
@@ -132,20 +132,20 @@
                                         <i class="fas fa-download"></i>
                                         <span>下载</span>
                                     </a>
-                                    <!-- 生成按钮放最右边 -->
-                                    <button id="generate-voice" class="ai-submit-btn tooltip" data-tooltip="生成文本对应的AI配音" disabled>
+
+                                    <button id="generate-voice" class="action-btn  sample-btn tooltip" data-tooltip="生成文本对应的AI配音" disabled>
                                         <span class="btn-text">生成</span>
                                         <div class="btn-loader"></div>
                                     </button>
+
+                                    <div class="limit-info">
+                                        <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
+                                        <div id="cooldown-timer" class="cooldown-timer"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- 剩余次数和结果状态 -->
-                        <div class="limit-info">
-                            <div id="requests-left" class="requests-counter">剩余请求次数: 5</div>
-                            <div id="cooldown-timer" class="cooldown-timer"></div>
-                        </div>
                         
                         <div class="result-status-container">
                             <div id="result-status" class="result-status"></div>
