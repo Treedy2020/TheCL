@@ -8,14 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const resultStatus = document.getElementById('result-status');
   const playerContainer = document.getElementById('audio-player');
   const resultAudio = document.getElementById('shared-audio');
-  const resultPlayBtn = document.getElementById('shared-play-btn');
-  const downloadLink = document.getElementById('download-link');
   const requestsLeft = document.getElementById('requests-left');
   const cooldownTimer = document.getElementById('cooldown-timer');
 
   // 变量初始化
-  let selectedSpeaker = '1'; // 默认选择第一个声音
-  let isPlaying = false;
   let requestCount = 0;
   let cooldownEndTime = 0;
   let cooldownInterval = null;

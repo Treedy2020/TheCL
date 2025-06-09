@@ -175,3 +175,42 @@ cython_debug/
 
 /output
 **.DS_Store
+
+# JavaScript
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Environment variables
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Coverage directory
+coverage/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+.DS_Store
+*.log
+.tmp
+.temp
