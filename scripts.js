@@ -135,15 +135,6 @@ function generateWorks() {
                 </a>
             </div>` : '';
         
-        // Add the work image for preview
-        <div class="work-image">
-            <img src="${work.image}" alt="${work.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=图片加载中'">
-            ${work.link ? `<div class="image-overlay">
-                <a href="${work.link}" target="_blank" class="view-button">
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>` : ''}
-        </div>
         workItem.innerHTML = `
             <div class="work-date">
                 <span>${work.year}</span>
@@ -152,6 +143,14 @@ function generateWorks() {
                 <div class="work-tag ${work.type}">${work.typeName}${specialMark}</div>
                 <h3>${work.title}</h3>
                 <div class="work-details">
+                    <div class="work-image">
+                        <img src="${work.image}" alt="${work.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=图片加载中'">
+                        ${work.link ? `<div class="image-overlay">
+                            <a href="${work.link}" target="_blank" class="view-button">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>` : ''}
+                    </div>
                     <div class="work-description">
                         <p>配音角色：${work.role}</p>
                         <p>作品简介：${work.description.replace(/[🔥👑]/g, '')}</p>
@@ -161,6 +160,7 @@ function generateWorks() {
                 </div>
             </div>
         `;
+  
         
         timeline.appendChild(workItem);
         
