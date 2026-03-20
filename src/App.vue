@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
       </button>
     </div>
 
-    <!-- Top Nav / Lang Switch (Desktop only, mobile moved to sticky bar) -->
+    <!-- Top Nav / Lang Switch (Desktop) -->
     <nav class="absolute top-0 right-0 p-6 hidden xl:flex justify-end z-50">
       <button 
         @click="isEn = !isEn" 
@@ -116,26 +116,26 @@ onBeforeUnmount(() => {
       </button>
     </nav>
 
-    <!-- Side Navigation (Fixed) -->
-    <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6 items-center">
-      <div class="h-24 w-0.5 bg-[#111] opacity-20"></div>
-      
-      <button @click="goSection('intro')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
-        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#0033FF] transition-colors" style="text-orientation: upright">{{ t.navIntro }}</span>
-        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
+    <!-- Side Navigation (Desktop) -->
+    <div class="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-12 items-center">
+      <button @click="goSection('intro')" class="-rotate-90 text-xs font-black tracking-[0.2em] hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</button>
+      <button @click="goSection('works')" class="-rotate-90 text-xs font-black tracking-[0.2em] hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</button>
+      <button @click="goSection('contact')" class="-rotate-90 text-xs font-black tracking-[0.2em] hover:text-[#0033FF] transition-colors">{{ t.navContact }}</button>
+    </div>
+
+    <!-- Top Navigation (Mobile) -->
+    <div class="sticky top-0 left-0 right-0 z-40 bg-[#EFECE6]/90 backdrop-blur-md border-b-4 border-[#111] xl:hidden flex justify-between items-center px-4 py-3 shadow-md">
+      <div class="flex items-center gap-4">
+        <button @click="goSection('intro')" class="text-sm font-black tracking-widest hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</button>
+        <button @click="goSection('works')" class="text-sm font-black tracking-widest hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</button>
+        <button @click="goSection('contact')" class="text-sm font-black tracking-widest hover:text-[#0033FF] transition-colors">{{ t.navContact }}</button>
+      </div>
+      <button 
+        @click="isEn = !isEn" 
+        class="border-2 border-[#111] bg-white px-2 py-0.5 text-xs font-black uppercase hover:bg-[#FF3B00] hover:text-white transition-colors"
+      >
+        {{ isEn ? '中' : 'EN' }}
       </button>
-      
-      <button @click="goSection('works')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
-        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#FF3B00] transition-colors" style="text-orientation: upright">{{ t.navWorks }}</span>
-        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#FF3B00] group-hover:border-[#FF3B00] transition-colors"></div>
-      </button>
-      
-      <button @click="goSection('contact')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
-        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#0033FF] transition-colors" style="text-orientation: upright">{{ t.navContact }}</span>
-        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
-      </button>
-      
-      <div class="h-24 w-0.5 bg-[#111] opacity-20"></div>
     </div>
 
     <!-- Top Header / CD Case Concept -->
@@ -307,22 +307,24 @@ onBeforeUnmount(() => {
           {{ t.contact }}
         </div>
         
-        <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-          <div class="text-center md:text-left">
-            <h3 class="text-3xl font-black uppercase tracking-tighter mb-2">Booking & Inquiries</h3>
-            <p class="text-sm font-medium text-[#555] mb-6">{{ t.scan }}</p>
-            <button @click="showQR = !showQR" class="bg-[#111] text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-[#0033FF] transition-colors border-2 border-[#111]">
-              {{ showQR ? (isEn ? 'Close QR' : '收起二维码') : (isEn ? 'Show WeChat QR' : '显示企微二维码') }}
-            </button>
-          </div>
-          
-          <div v-if="showQR" class="w-48 h-48 bg-white border-4 border-[#111] p-4 shadow-[8px_8px_0px_#111] animate-[fadeInUp_0.3s_ease-out]">
+        <div class="mx-auto max-w-3xl rounded-3xl border-4 border-[#111] bg-white p-6 md:p-8 shadow-[10px_10px_0px_#111]">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-center md:text-left">
+              <h3 class="text-3xl font-black uppercase tracking-tighter mb-2">Booking & Inquiries</h3>
+              <p class="text-sm font-medium text-[#555] mb-6">{{ t.scan }}</p>
+              <button @click="showQR = !showQR" class="bg-[#111] text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-[#0033FF] transition-colors border-2 border-[#111] rounded-full">
+                {{ showQR ? (isEn ? 'Close QR' : '收起二维码') : (isEn ? 'Show WeChat QR' : '显示企微二维码') }}
+              </button>
+            </div>
+            
+            <div v-if="showQR" class="w-48 h-48 bg-white border-4 border-[#111] p-4 shadow-[8px_8px_0px_#111] animate-[fadeInUp_0.3s_ease-out]">
             <!-- Placeholder for QR code -->
             <div class="w-full h-full border-2 border-dashed border-[#ccc] flex items-center justify-center bg-[#f9f9f9]">
               <span class="text-[#888] font-bold text-sm text-center">QR CODE<br/>PLACEHOLDER</span>
             </div>
           </div>
         </div>
+      </div>
         
         <div class="mt-24 text-center">
           <p class="text-[10px] font-black text-[#888] uppercase tracking-widest mb-4">Produced by OpenClaw & TreeDy</p>
