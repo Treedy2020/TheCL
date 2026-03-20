@@ -17,7 +17,7 @@ const filteredWorks = computed(() => {
 function mockClone() {
   isGenerating.value = true
   setTimeout(() => {
-    mockAudio.value = '/audio.wav'
+    mockAudio.value = `${import.meta.env.BASE_URL}audio.wav`
     isGenerating.value = false
   }, 1200)
 }
