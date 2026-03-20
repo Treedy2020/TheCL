@@ -222,19 +222,19 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/HoYoverse_logo.svg" alt="米哈游" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">米哈游</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/IFLYTEK_Logo.svg" alt="科大讯飞" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">科大讯飞</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Tencent_Cloud_logo.svg" alt="腾讯云" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">腾讯云</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
             </div>
@@ -249,19 +249,19 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/HoYoverse_logo.svg" alt="米哈游" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">米哈游</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/IFLYTEK_Logo.svg" alt="科大讯飞" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">科大讯飞</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Tencent_Cloud_logo.svg" alt="腾讯云" class="h-full object-contain" />
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">腾讯云</span>
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
             </div>
