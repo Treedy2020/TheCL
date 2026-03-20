@@ -25,7 +25,10 @@ const t = computed(() => ({
   loadMore: isEn.value ? 'Flip the record / Load more' : '翻转唱片 / 加载更多',
   noMore: isEn.value ? 'NO MORE TRACKS' : '已播完所有曲目',
   contact: isEn.value ? 'Contact / Booking' : '联系 / 商务合作',
-  scan: isEn.value ? 'Scan WeChat to collaborate' : '扫码添加企业微信合作'
+  scan: isEn.value ? 'Scan WeChat to collaborate' : '扫码添加企业微信合作',
+  navIntro: isEn.value ? 'INTRO' : '介绍',
+  navWorks: isEn.value ? 'WORKS' : '作品',
+  navContact: isEn.value ? 'CONTACT' : '合作'
 }))
 
 // Map English categories back to original Chinese types for filtering
@@ -62,6 +65,11 @@ function loadMoreWorks() {
 
 const showQR = ref(false)
 
+function goSection(id) {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
@@ -90,8 +98,30 @@ onBeforeUnmount(() => {
       </button>
     </nav>
 
+    <!-- Side Navigation (Fixed) -->
+    <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6 items-center">
+      <div class="h-24 w-0.5 bg-[#111] opacity-20"></div>
+      
+      <button @click="goSection('intro')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
+        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</span>
+        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
+      </button>
+      
+      <button @click="goSection('works')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
+        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</span>
+        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#FF3B00] group-hover:border-[#FF3B00] transition-colors"></div>
+      </button>
+      
+      <button @click="goSection('contact')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
+        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#0033FF] transition-colors">{{ t.navContact }}</span>
+        <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
+      </button>
+      
+      <div class="h-24 w-0.5 bg-[#111] opacity-20"></div>
+    </div>
+
     <!-- Top Header / CD Case Concept -->
-    <header class="p-6 md:p-12 max-w-7xl mx-auto pt-20 md:pt-24">
+    <header id="intro" class="p-6 md:p-12 max-w-7xl mx-auto pt-20 md:pt-24 xl:pl-32 scroll-mt-24">
       <div class="flex flex-col lg:flex-row gap-10 md:gap-16 items-center lg:items-start">
         
         <!-- Album Cover (The Case) -->
@@ -106,15 +136,16 @@ onBeforeUnmount(() => {
 
             <!-- The Cover -->
             <div class="relative z-10 border-4 border-[#111] bg-white shadow-[10px_10px_0px_rgba(0,51,255,1)] md:shadow-[15px_15px_0px_rgba(0,51,255,1)] overflow-hidden transition-transform group-hover:-translate-x-2">
+              <!-- Removed grayscale here -->
               <img 
                 src="/self.jpeg" 
-                class="w-full h-auto block filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700" 
+                class="w-full h-auto block contrast-[1.05] saturate-[1.05] transition-all duration-700 hover:scale-105" 
                 alt="Profile"
                 onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
               />
               <!-- Album Text Overlay -->
               <div class="absolute top-0 left-0 p-3 md:p-4 mix-blend-difference text-white">
-                <p class="text-[8px] md:text-[10px] font-black tracking-[0.5em] uppercase opacity-50">STEREO / DIGITAL RELEASE</p>
+                <p class="text-[8px] md:text-[10px] font-black tracking-[0.5em] uppercase opacity-70">STEREO / DIGITAL RELEASE</p>
               </div>
             </div>
           </div>
@@ -166,7 +197,7 @@ onBeforeUnmount(() => {
     </header>
 
     <!-- Tracklist (The Album Structure) -->
-    <main class="max-w-7xl mx-auto px-6 md:px-12 mt-16 md:mt-24">
+    <main id="works" class="max-w-7xl mx-auto px-6 md:px-12 mt-16 md:mt-24 xl:pl-32 scroll-mt-12">
       <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b-4 md:border-b-8 border-[#111] pb-4 mb-8 md:mb-12 gap-4">
         <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter">{{ t.tracklist }}</h2>
         <div class="text-left sm:text-right">
@@ -250,7 +281,7 @@ onBeforeUnmount(() => {
       </div>
       
       <!-- Contact / QR Code Footer -->
-      <div class="mt-32 pt-16 border-t-8 border-[#111] relative">
+      <div id="contact" class="mt-32 pt-16 border-t-8 border-[#111] relative scroll-mt-24">
         <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#FF3B00] text-white px-6 py-2 font-black italic uppercase tracking-widest border-4 border-[#111] shadow-[4px_4px_0px_#111]">
           {{ t.contact }}
         </div>
