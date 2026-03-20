@@ -137,6 +137,15 @@ function mockClone() {
                 <h3 class="mt-1 font-semibold text-slate-900">{{ work.title }}</h3>
                 <p class="mt-1 text-sm text-slate-600">角色：{{ work.role }}</p>
                 <p class="mt-2 text-sm text-slate-500">{{ work.description }}</p>
+                <a
+                  v-if="work.link"
+                  :href="work.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-3 inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs text-sky-700 transition hover:bg-sky-100"
+                >
+                  查看作品链接
+                </a>
               </div>
             </article>
           </div>

@@ -48,5 +48,23 @@ export const works = [
     role: '太子妃 / 协役',
     image: `${base}image9.jpg`,
     description: '古风项目，角色端庄克制，叙事节奏稳定。'
+  },
+  {
+    year: 2021,
+    type: '有声漫',
+    title: '王爷你好贱',
+    role: '朱无心',
+    image: `${base}image8.webp`,
+    description: 'Bilibili 动态漫项目，古风喜剧向角色演绎。',
+    link: 'https://www.bilibili.com/bangumi/play/ss33164'
+  },
+  {
+    year: 2020,
+    type: '广播剧',
+    title: '不优雅',
+    role: '女主',
+    image: `${base}image10.webp`,
+    description: '改编自同名漫画的广播剧专辑项目。',
+    link: 'https://www.kuwo.cn/album_detail/15639808'
   }
 ]
