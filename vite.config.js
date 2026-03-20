@@ -1,14 +1,14 @@
 import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  plugins: [vue(), tailwindcss()],
+  base: '/TheCL/',
   server: {
     port: 3000,
-    open: true, // 自动打开浏览器
-    hmr: {
-      port: 24678 // HMR 端口
-    }
+    open: true
   },
-  root: '.', // 项目根目录
   build: {
     outDir: 'dist'
   }
