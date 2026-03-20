@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Top Navigation (Mobile) -->
-    <div class="sticky top-0 left-0 right-0 z-40 bg-[#EFECE6]/90 backdrop-blur-md border-b-4 border-[#111] xl:hidden flex justify-between items-center px-4 py-3 shadow-md">
+    <div class="fixed top-0 left-0 right-0 z-50 bg-[#EFECE6]/95 backdrop-blur-xl border-b-4 border-[#111] xl:hidden flex justify-between items-center px-4 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-transform duration-300">
       <div class="flex items-center gap-4">
         <button @click="goSection('intro')" class="text-sm font-black tracking-widest hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</button>
         <button @click="goSection('works')" class="text-sm font-black tracking-widest hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</button>
@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Top Header / CD Case Concept -->
-    <header id="intro" class="p-6 md:p-12 max-w-7xl mx-auto pt-20 md:pt-24 xl:pl-32 scroll-mt-24">
+    <header id="intro" class="p-6 md:p-12 max-w-7xl mx-auto pt-20 md:pt-24 xl:pl-32 scroll-mt-24 mt-12 xl:mt-0">
       <div class="flex flex-col lg:flex-row gap-10 md:gap-16 items-center lg:items-start">
         
         <!-- Album Cover (The Case) -->
