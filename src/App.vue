@@ -42,146 +42,149 @@ onBeforeUnmount(() => {
 <template>
   <div class="min-h-screen bg-[#EFECE6] text-[#111] font-sans selection:bg-[#FF3B00] selection:text-white pb-32 overflow-x-hidden">
     
-    <!-- Top Header / Editorial Profile -->
-    <header class="p-6 md:p-12 flex flex-col md:flex-row justify-between items-start gap-8">
-      <div class="max-w-2xl">
-        <p class="text-xs md:text-sm font-bold uppercase tracking-widest text-[#0033FF] mb-4">Voice Artist & Actor</p>
-        <h1 class="text-6xl md:text-8xl lg:text-[140px] font-black tracking-tighter leading-[0.85] uppercase" style="font-family: impact, ui-sans-serif, sans-serif;">
-          水何<br/><span class="text-[#FF3B00]">澹澹</span>
-        </h1>
-        <p class="mt-8 text-lg md:text-2xl font-medium leading-relaxed max-w-xl">
-          10余年声音探索之旅。游走于有声书、游戏、广播剧与影视之间。用不同的声线，折射色彩碰撞的艺术世界。
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">中文</span>
-          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">粤语</span>
-          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full bg-[#111] text-[#EFECE6] cursor-default">英语</span>
-          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">法语</span>
+    <!-- Top Header / CD Case Concept -->
+    <header class="p-6 md:p-12 max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row gap-12 items-start">
+        
+        <!-- Album Cover (The Case) -->
+        <div class="w-full lg:w-[500px] shrink-0">
+          <div class="relative group">
+            <!-- Vinyl sliding out effect behind the cover -->
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-full aspect-square bg-[#111] rounded-full border-4 border-[#222] translate-x-12 transition-transform duration-700 group-hover:translate-x-24 hidden md:flex items-center justify-center">
+              <div class="w-1/3 aspect-square rounded-full border-4 border-[#333] bg-[#FF3B00] flex items-center justify-center">
+                <div class="w-4 h-4 bg-[#EFECE6] rounded-full"></div>
+              </div>
+            </div>
+
+            <!-- The Cover -->
+            <div class="relative z-10 border-4 border-[#111] bg-white shadow-[15px_15px_0px_rgba(0,51,255,1)] overflow-hidden transition-transform group-hover:-translate-x-2">
+              <img 
+                src="/self.jpeg" 
+                class="w-full h-auto block filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700" 
+                alt="Profile"
+                onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
+              />
+              <!-- Album Text Overlay -->
+              <div class="absolute top-0 left-0 p-4 mix-blend-difference text-white">
+                <p class="text-[10px] font-black tracking-[0.5em] uppercase opacity-50">STEREO / DIGITAL RELEASE</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <!-- Profile Picture treated as album cover -->
-      <div class="w-full md:w-80 lg:w-[450px] shrink-0 relative group">
-        <!-- Hard Shadow Base -->
-        <div class="absolute inset-0 border-4 border-[#111] bg-[#0033FF] translate-x-4 translate-y-4"></div>
-        <!-- Image Container -->
-        <div class="relative border-4 border-[#111] bg-white overflow-hidden">
-          <img 
-            src="/self.jpeg" 
-            class="w-full h-auto block filter grayscale group-hover:grayscale-0 transition-all duration-700" 
-            alt="Profile"
-            onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
-          />
-        </div>
-        <!-- Sticker -->
-        <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FF3B00] rounded-full border-4 border-[#111] flex items-center justify-center animate-[spin_10s_linear_infinite]">
-          <span class="text-white font-black text-xl transform -rotate-12">10+ YRS</span>
+
+        <!-- Album Metadata -->
+        <div class="flex-1 flex flex-col justify-between self-stretch pt-4">
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="bg-[#FF3B00] text-white px-3 py-1 text-xs font-black italic uppercase">Parental Advisory: Explicit Talent</span>
+              <span class="text-xs font-bold text-[#0033FF] tracking-widest uppercase">LP-2026-SJ</span>
+            </div>
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.8] uppercase mb-8" style="font-family: impact, ui-sans-serif, sans-serif;">
+              水何<br/><span class="text-[#0033FF]">澹澹</span>
+            </h1>
+            <div class="space-y-4">
+              <p class="text-2xl font-bold italic leading-tight border-l-8 border-[#FF3B00] pl-6 py-2">
+                "Voice is the mirror of the soul, and I have many mirrors."
+              </p>
+              <p class="text-lg font-medium text-[#444] max-w-xl">
+                SIDE A: Professional Dubbing / SIDE B: Artistic Expression. <br/>
+                10+ Years of Sonic Exploration. Featured in Games, Movies & Literature.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-12">
+            <div class="grid grid-cols-2 gap-4 border-t-4 border-[#111] pt-6">
+              <div>
+                <p class="text-[10px] font-black text-[#0033FF] uppercase mb-1">Artist</p>
+                <p class="font-bold">SUI HE DAN DAN</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-black text-[#0033FF] uppercase mb-1">Format</p>
+                <p class="font-bold">HI-RES AUDIO LP</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- Marquee Tape -->
-    <div class="w-full overflow-hidden border-y-4 border-[#111] bg-[#FF3B00] text-[#EFECE6] py-3 flex items-center whitespace-nowrap mt-12 md:mt-24">
-      <div class="animate-marquee font-black uppercase text-2xl tracking-widest flex gap-8">
-        <span>AUDIO BOOKS</span><span>•</span>
-        <span>GAMING VOICES</span><span>•</span>
-        <span>RADIO DRAMA</span><span>•</span>
-        <span>FILM & TV DUBBING</span><span>•</span>
-        <span>AUDIO BOOKS</span><span>•</span>
-        <span>GAMING VOICES</span><span>•</span>
-        <span>RADIO DRAMA</span><span>•</span>
-        <span>FILM & TV DUBBING</span><span>•</span>
-        <span>AUDIO BOOKS</span><span>•</span>
-        <span>GAMING VOICES</span><span>•</span>
-        <span>RADIO DRAMA</span><span>•</span>
-        <span>FILM & TV DUBBING</span><span>•</span>
+    <!-- Tracklist (The Album Structure) -->
+    <main class="max-w-7xl mx-auto px-6 md:px-12 mt-24">
+      <div class="flex items-baseline justify-between border-b-8 border-[#111] pb-4 mb-12">
+        <h2 class="text-5xl font-black italic uppercase tracking-tighter">Tracklist</h2>
+        <div class="text-right hidden sm:block">
+          <p class="text-xs font-black text-[#0033FF] uppercase">Total Duration</p>
+          <p class="text-xl font-bold tracking-tighter">∞ INFINITE HOURS</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Works Grid Section -->
-    <main class="p-6 md:p-12 mt-12">
-      <!-- Filter -->
-      <div class="flex flex-wrap gap-3 mb-16">
+      <!-- Filter Tabs as 'Discs' -->
+      <div class="flex flex-wrap gap-4 mb-16">
         <button
           v-for="category in categories"
           :key="category"
           @click="activeCategory = category; visibleCount = PAGE_SIZE"
           :class="[
-            'px-6 py-2 rounded-full text-base font-black uppercase transition-all duration-300 border-4',
-            activeCategory === category 
-              ? 'bg-[#0033FF] border-[#0033FF] text-white' 
-              : 'border-[#111] text-[#111] hover:bg-[#111] hover:text-[#EFECE6]'
+            'group relative overflow-hidden px-8 py-3 transition-all duration-300',
+            activeCategory === category ? 'text-white' : 'text-[#111]'
           ]"
         >
-          {{ category }}
+          <div :class="['absolute inset-0 border-4 border-[#111] transition-transform duration-300', activeCategory === category ? 'bg-[#111] translate-x-0 translate-y-0' : 'bg-transparent translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0']"></div>
+          <span class="relative z-10 font-black uppercase text-sm tracking-widest">{{ category }}</span>
         </button>
       </div>
 
-      <!-- Asymmetric / Brutalist Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+      <!-- Compact List Style (Like back of a CD) -->
+      <div class="divide-y-4 divide-[#111] border-b-4 border-[#111]">
         <article
           v-for="(work, index) in displayedWorks"
           :key="work.title"
-          class="group relative"
+          class="group flex items-center py-6 gap-6 transition-colors hover:bg-white/40"
         >
-          <!-- Image Block -->
-          <div class="relative w-full aspect-[4/3]">
-            <!-- Hard Shadow Base -->
-            <div class="absolute inset-0 border-4 border-[#111] bg-[#111] translate-x-3 translate-y-3 transition-transform duration-300 group-hover:translate-x-5 group-hover:translate-y-5"></div>
-            <!-- Image Container -->
-            <div class="absolute inset-0 border-4 border-[#111] bg-[#FF3B00] overflow-hidden">
-              <img 
-                :src="work.image" 
-                :alt="work.title" 
-                loading="lazy"
-                class="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-105 transition-all duration-700"
-              />
-              
-              <!-- Hover Overlay for Link -->
-              <a v-if="work.link" :href="work.link" target="_blank" class="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-sm">
-                <span class="bg-[#EFECE6] text-[#111] px-6 py-3 font-black text-lg rounded-full border-4 border-[#111] flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                  PLAY / VIEW 
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-                </span>
-              </a>
+          <span class="text-2xl font-black text-[#0033FF] italic w-12">{{ String(index + 1).padStart(2, '0') }}</span>
+          
+          <div class="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <div class="md:col-span-4">
+              <h3 class="text-2xl font-black uppercase tracking-tight group-hover:text-[#FF3B00] transition-colors leading-none mb-1">{{ work.title }}</h3>
+              <p class="text-xs font-bold text-[#888] uppercase tracking-widest">{{ work.role }}</p>
             </div>
             
-            <!-- Type Tag -->
-            <div class="absolute -left-2 top-6 bg-[#0033FF] text-white px-4 py-1 font-black text-sm border-2 border-[#111] uppercase rotate-[-2deg]">
-              {{ work.type }}
+            <div class="md:col-span-5">
+              <p class="text-sm font-medium text-[#444] line-clamp-1 italic italic">"{{ work.description }}"</p>
             </div>
-            <!-- Year Tag -->
-            <div class="absolute -right-2 bottom-6 bg-[#FF3B00] text-white px-4 py-1 font-black text-xl border-2 border-[#111] rotate-[3deg]">
-              '{{ String(work.year).slice(2) }}
+
+            <div class="md:col-span-1 text-center">
+              <span class="text-xs font-black bg-[#111] text-[#EFECE6] px-2 py-0.5 rounded uppercase">{{ work.type }}</span>
             </div>
-          </div>
-          
-          <!-- Typography Info -->
-          <div class="mt-8 pr-4">
-            <h3 class="text-3xl font-black leading-none mb-3 uppercase tracking-tight">{{ work.title }}</h3>
-            <div class="flex items-center gap-3 mb-3">
-              <span class="px-2 py-0.5 bg-[#111] text-[#EFECE6] text-xs font-bold uppercase rounded-sm">ROLE</span>
-              <span class="font-bold text-[#FF3B00] text-lg">{{ work.role }}</span>
+
+            <div class="md:col-span-2 flex justify-end items-center gap-6">
+              <span class="text-sm font-black italic tracking-tighter opacity-40">[{{ work.year }}]</span>
+              <a v-if="work.link" :href="work.link" target="_blank" class="w-10 h-10 rounded-full border-2 border-[#111] flex items-center justify-center hover:bg-[#FF3B00] hover:text-white transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
             </div>
-            <p class="text-base font-medium text-[#444] leading-relaxed line-clamp-3">
-              {{ work.description }}
-            </p>
           </div>
         </article>
       </div>
 
-      <!-- Load More / End Marker -->
-      <div ref="loadMoreRef" class="mt-24 pt-12 border-t-4 border-[#111] flex justify-center">
+      <!-- Load More / Footer Credits -->
+      <div ref="loadMoreRef" class="mt-20 flex flex-col items-center">
         <button
           v-if="hasMoreWorks"
           @click="loadMoreWorks"
-          class="border-4 border-[#111] bg-[#FF3B00] text-white px-10 py-4 font-black text-xl hover:bg-[#111] hover:text-[#EFECE6] transition-colors shadow-[6px_6px_0px_#111] hover:shadow-[2px_2px_0px_#111] hover:translate-x-1 hover:translate-y-1"
+          class="text-xs font-black uppercase tracking-[0.5em] border-b-4 border-[#111] pb-1 hover:text-[#0033FF] hover:border-[#0033FF] transition-all"
         >
-          LOAD MORE ARCHIVES
+          Flip the record / Load more
         </button>
-        <div v-else class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-[#111] mb-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 3-3 4 4 4-4 3 3z"/></svg>
-          <p class="text-sm font-black text-[#111] tracking-[0.3em] uppercase">NO MORE TRACKS</p>
+        
+        <div class="mt-24 text-center">
+          <p class="text-[10px] font-black text-[#888] uppercase tracking-widest mb-4">Produced by OpenClaw & TreeDy</p>
+          <div class="flex justify-center gap-8 opacity-20 filter grayscale">
+             <!-- Fake logos for aesthetic -->
+             <div class="font-black text-xl italic tracking-tighter border-2 border-[#111] px-2">RECORDS</div>
+             <div class="font-black text-xl tracking-widest underline decoration-4">STUDIO</div>
+          </div>
         </div>
       </div>
     </main>
