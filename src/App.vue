@@ -1,10 +1,12 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { works } from './works'
 
-const text = ref('你好，我是水何澹澹。欢迎来到我的配音作品展示站。')
+const text = ref('你好，我是水何澹澹。欢迎来到我的配音作品集。')
 const isGenerating = ref(false)
 const mockAudio = ref('')
+const isPlaying = ref(false)
+const audioRef = ref(null)
 
 const categories = ['全部', ...new Set(works.map((w) => w.type))]
 const activeCategory = ref('全部')
@@ -14,188 +16,209 @@ const filteredWorks = computed(() => {
   return works.filter((w) => w.type === activeCategory.value)
 })
 
-const PAGE_SIZE = 6
-const visibleCount = ref(PAGE_SIZE)
-const loadMoreRef = ref(null)
-let observer
-
-const displayedWorks = computed(() => filteredWorks.value.slice(0, visibleCount.value))
-const hasMoreWorks = computed(() => visibleCount.value < filteredWorks.value.length)
-
-function loadMoreWorks() {
-  if (hasMoreWorks.value) {
-    visibleCount.value += PAGE_SIZE
-  }
-}
-
-const navItems = [
-  { id: 'intro', label: '介绍' },
-  { id: 'clone', label: '体验' },
-  { id: 'works', label: '作品' }
-]
-
-function goSection(id) {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 function mockClone() {
+  if (!text.value.trim()) return
   isGenerating.value = true
+  mockAudio.value = ''
+  isPlaying.value = false
+  
   setTimeout(() => {
     mockAudio.value = `${import.meta.env.BASE_URL}audio.wav`
     isGenerating.value = false
-  }, 1200)
+    // Auto play
+    setTimeout(() => {
+      if (audioRef.value) {
+        audioRef.value.play().catch(e => console.log('Autoplay prevented', e))
+      }
+    }, 100)
+  }, 1500)
 }
 
-watch(activeCategory, () => {
-  visibleCount.value = PAGE_SIZE
-})
-
-onMounted(() => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      const target = entries[0]
-      if (target?.isIntersecting) loadMoreWorks()
-    },
-    { rootMargin: '200px 0px 200px 0px' }
-  )
-
-  if (loadMoreRef.value) observer.observe(loadMoreRef.value)
-})
-
-onBeforeUnmount(() => {
-  if (observer) observer.disconnect()
-})
+function togglePlay() {
+  if (!audioRef.value) return
+  if (isPlaying.value) {
+    audioRef.value.pause()
+  } else {
+    audioRef.value.play()
+  }
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f6fbff] text-slate-800">
-    <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(125,211,252,0.35),transparent_34%),radial-gradient(circle_at_90%_0%,rgba(167,243,208,0.4),transparent_32%),radial-gradient(circle_at_50%_100%,rgba(226,232,240,0.7),transparent_60%)]" />
+  <div class="relative min-h-screen bg-[#050505] text-white selection:bg-white/30 pb-32">
+    <!-- Ambient Background -->
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="absolute -left-[20%] -top-[10%] h-[70vh] w-[70vw] rounded-full bg-indigo-900/20 blur-[120px]" />
+      <div class="absolute -right-[10%] top-[40%] h-[50vh] w-[50vw] rounded-full bg-cyan-900/20 blur-[100px]" />
+    </div>
 
-    <main class="mx-auto flex max-w-7xl gap-6 px-4 pb-16 pt-6 sm:px-6 sm:pt-10">
-      <aside class="sticky top-8 hidden h-fit w-52 rounded-3xl border border-white/70 bg-white/75 p-4 shadow-[0_10px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl lg:block">
-        <p class="mb-4 px-2 text-xs font-semibold tracking-wide text-slate-400">NAVIGATION</p>
-        <div class="space-y-2">
-          <button
-            v-for="item in navItems"
-            :key="item.id"
-            @click="goSection(item.id)"
-            class="w-full rounded-2xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-sky-50 hover:text-sky-700"
-          >
-            {{ item.label }}
-          </button>
+    <main class="mx-auto max-w-6xl px-6 pt-12 lg:flex lg:gap-16 lg:pt-24">
+      
+      <!-- Artist Profile (Album Cover side) -->
+      <aside class="fade-in-up lg:sticky lg:top-24 lg:w-[400px] lg:shrink-0 lg:self-start">
+        <div class="group relative aspect-square w-full overflow-hidden rounded-2xl shadow-2xl shadow-cyan-900/20">
+          <img 
+            src="/self.jpeg" 
+            alt="水何澹澹" 
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-xs font-medium tracking-widest text-cyan-400">VOICE ARTIST</p>
+            <h1 class="mt-2 text-4xl font-light tracking-wide sm:text-5xl">水何澹澹</h1>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-6 text-white/70">
+          <p class="text-base font-light leading-relaxed">
+            10余年声音探索之旅。游走于有声书、游戏、广播剧与影视之间。
+            <br/><br/>
+            清澈而不失力量，细腻亦能承载宏大。用声音为纸上世界注入灵魂。
+          </p>
+          
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">中文</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">粤语</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">英语</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">法语</span>
+          </div>
         </div>
       </aside>
 
-      <div class="min-w-0 flex-1">
-        <div class="sticky top-3 z-20 mb-5 flex gap-2 overflow-x-auto rounded-2xl border border-white/70 bg-white/85 p-2 shadow-sm backdrop-blur lg:hidden">
+      <!-- Tracklist (Works) -->
+      <section class="fade-in-up mt-16 flex-1 lg:mt-0" style="animation-delay: 0.2s">
+        
+        <div class="mb-8 flex items-end justify-between border-b border-white/10 pb-4">
+          <h2 class="text-2xl font-light tracking-wide text-white/90">Selected Works</h2>
+          
+          <div class="hidden gap-4 sm:flex">
+            <button
+              v-for="category in categories"
+              :key="category"
+              @click="activeCategory = category"
+              :class="[
+                'text-sm transition-colors duration-300',
+                activeCategory === category ? 'text-cyan-400 font-medium' : 'text-white/40 hover:text-white/80'
+              ]"
+            >
+              {{ category }}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Mobile categories -->
+        <div class="mb-6 flex gap-3 overflow-x-auto pb-2 sm:hidden scrollbar-hide">
           <button
-            v-for="item in navItems"
-            :key="`m-${item.id}`"
-            @click="goSection(item.id)"
-            class="shrink-0 rounded-xl bg-white px-3 py-1.5 text-sm text-slate-600 shadow-sm"
+            v-for="category in categories"
+            :key="`m-${category}`"
+            @click="activeCategory = category"
+            :class="[
+              'shrink-0 rounded-full px-4 py-1.5 text-xs transition-colors',
+              activeCategory === category ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'bg-white/5 text-white/60 border border-white/10'
+            ]"
           >
-            {{ item.label }}
+            {{ category }}
           </button>
         </div>
 
-        <section id="intro" class="grid scroll-mt-20 gap-8 rounded-[2rem] border border-white/70 bg-white/70 p-6 shadow-[0_10px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl md:grid-cols-2 md:p-8">
-          <div>
-            <p class="mb-4 inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium tracking-wide text-sky-600">
-              VOICE ACTOR PORTFOLIO
-            </p>
-            <h1 class="text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl md:text-5xl">水何澹澹</h1>
-            <p class="mt-4 text-slate-600">
-              10+ 年配音经验，覆盖有声书、游戏、广播剧、广告与影视。声音清澈、情绪细腻，擅长从少女到成熟女性的多样化角色塑造。
-            </p>
-
-            <div class="mt-6 flex flex-wrap gap-2 text-sm">
-              <span class="rounded-full bg-white px-3 py-1 text-slate-600 shadow-sm">中文</span>
-              <span class="rounded-full bg-white px-3 py-1 text-slate-600 shadow-sm">粤语</span>
-              <span class="rounded-full bg-white px-3 py-1 text-slate-600 shadow-sm">英语</span>
-              <span class="rounded-full bg-white px-3 py-1 text-slate-600 shadow-sm">法语</span>
+        <div class="space-y-2">
+          <article
+            v-for="(work, index) in filteredWorks"
+            :key="work.title"
+            class="group flex flex-col gap-4 rounded-xl p-3 transition-colors hover:bg-white/5 sm:flex-row sm:items-center sm:p-4"
+          >
+            <div class="flex items-center gap-4 sm:w-1/2">
+              <span class="w-6 text-center text-xs font-light text-white/30">{{ String(index + 1).padStart(2, '0') }}</span>
+              <div class="h-12 w-12 shrink-0 overflow-hidden rounded bg-white/10">
+                <img :src="work.image" :alt="work.title" loading="lazy" class="h-full w-full object-cover opacity-80 grayscale transition duration-500 group-hover:grayscale-0 group-hover:opacity-100" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <h3 class="truncate text-base font-medium text-white/90">{{ work.title }}</h3>
+                <p class="truncate text-xs text-cyan-400/80">{{ work.role }}</p>
+              </div>
             </div>
-          </div>
-
-          <div id="clone" class="scroll-mt-20 rounded-3xl border border-white/70 bg-white/80 p-5 shadow-[0_8px_24px_rgba(14,116,144,0.08)]">
-            <h2 class="text-lg font-semibold text-slate-900">语音克隆体验（Mock）</h2>
-            <p class="mt-2 text-sm text-slate-500">后端暂时关闭，当前为前端模拟生成效果。</p>
-
-            <textarea
-              v-model="text"
-              class="mt-4 min-h-28 w-full rounded-2xl border border-slate-200 bg-white/90 p-3 text-sm text-slate-700 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-            />
-
-            <button
-              :disabled="isGenerating"
-              @click="mockClone"
-              class="mt-3 w-full rounded-2xl bg-gradient-to-r from-sky-400 to-teal-300 px-4 py-2.5 font-medium text-white shadow-sm transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {{ isGenerating ? '生成中...' : '生成示例语音' }}
-            </button>
-
-            <audio v-if="mockAudio" class="mt-4 w-full" controls :src="mockAudio" />
-          </div>
-        </section>
-
-        <section id="works" class="mt-8 scroll-mt-20 rounded-[2rem] border border-white/70 bg-white/65 p-5 shadow-[0_10px_35px_rgba(15,23,42,0.05)] backdrop-blur-xl sm:p-6">
-          <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
-            <h2 class="text-2xl font-semibold text-slate-900">代表作品</h2>
-
-            <div class="flex flex-wrap gap-2">
-              <button
-                v-for="category in categories"
-                :key="category"
-                @click="activeCategory = category"
-                :class="[
-                  'rounded-full px-3 py-1 text-sm transition',
-                  activeCategory === category
-                    ? 'bg-sky-500 text-white shadow'
-                    : 'bg-white text-slate-600 hover:bg-sky-50'
-                ]"
-              >
-                {{ category }}
-              </button>
-            </div>
-          </div>
-
-          <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <article
-              v-for="work in displayedWorks"
-              :key="work.title"
-              class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(15,23,42,0.08)]"
-            >
-              <img :src="work.image" :alt="work.title" loading="lazy" decoding="async" class="h-44 w-full object-cover" />
-              <div class="p-4">
-                <p class="text-xs text-sky-600">{{ work.year }} · {{ work.type }}</p>
-                <h3 class="mt-1 font-semibold text-slate-900">{{ work.title }}</h3>
-                <p class="mt-1 text-sm text-slate-600">角色：{{ work.role }}</p>
-                <p class="mt-2 text-sm text-slate-500">{{ work.description }}</p>
-                <a
+            
+            <div class="ml-10 flex flex-1 items-center justify-between sm:ml-0">
+              <p class="line-clamp-2 text-xs font-light text-white/50 sm:pr-4">
+                {{ work.description }}
+              </p>
+              
+              <div class="flex shrink-0 items-center gap-4 pl-2">
+                <span class="text-xs font-light text-white/30">{{ work.year }}</span>
+                <a 
                   v-if="work.link"
                   :href="work.link"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="mt-3 inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs text-sky-700 transition hover:bg-sky-100"
+                  class="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 opacity-0 transition-all hover:bg-white/20 hover:text-white group-hover:opacity-100 sm:flex"
+                  title="View Project"
                 >
-                  查看作品链接
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
                 </a>
               </div>
-            </article>
-          </div>
-
-          <div ref="loadMoreRef" class="mt-6 flex justify-center">
-            <button
-              v-if="hasMoreWorks"
-              @click="loadMoreWorks"
-              class="rounded-full bg-white px-4 py-2 text-sm text-slate-600 shadow-sm transition hover:bg-sky-50"
-            >
-              加载更多作品
-            </button>
-            <p v-else class="text-xs text-slate-400">已展示全部作品</p>
-          </div>
-        </section>
-      </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
+
+    <!-- Floating Interactive Player (AI Clone Mock) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-black/60 p-4 backdrop-blur-2xl sm:p-6">
+      <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:flex-row">
+        
+        <!-- Vinyl Disk -->
+        <div class="hidden shrink-0 sm:block">
+          <div :class="['relative h-14 w-14 overflow-hidden rounded-full border border-white/20 bg-zinc-900', isPlaying ? 'album-spin' : 'album-spin-paused']">
+            <div class="absolute inset-2 rounded-full border border-white/5" />
+            <div class="absolute inset-4 rounded-full border border-white/5" />
+            <div class="absolute inset-[22px] rounded-full bg-cyan-500/80" />
+            <div class="absolute inset-0 bg-[conic-gradient(from_90deg_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%,rgba(255,255,255,0.1)_100%)] mix-blend-overlay" />
+          </div>
+        </div>
+
+        <div class="flex-1 w-full space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <span class="text-xs font-medium text-cyan-400">AI 声线体验</span>
+            <span class="text-[10px] text-white/40">Powered by OpenClaw Mock</span>
+          </div>
+          <div class="flex w-full items-center gap-3">
+            <input 
+              v-model="text"
+              type="text"
+              placeholder="输入文本，倾听她的声音..."
+              class="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-light text-white outline-none transition focus:border-cyan-500/50 focus:bg-white/10"
+              @keyup.enter="mockClone"
+            />
+            <button 
+              @click="mockClone"
+              :disabled="isGenerating"
+              class="shrink-0 flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition hover:bg-cyan-50 disabled:opacity-50"
+            >
+              <svg v-if="isGenerating" class="h-4 w-4 animate-spin text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+              <span v-else>Generate</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Audio Player Controls -->
+        <div v-if="mockAudio" class="flex shrink-0 items-center justify-center sm:pl-4">
+          <button @click="togglePlay" class="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-500 text-black transition hover:scale-105 hover:bg-cyan-400">
+            <!-- Play/Pause Icon -->
+            <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="ml-1"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <audio 
+            ref="audioRef" 
+            :src="mockAudio" 
+            @play="isPlaying = true" 
+            @pause="isPlaying = false" 
+            @ended="isPlaying = false" 
+            class="hidden" 
+          />
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
