@@ -61,14 +61,18 @@ onBeforeUnmount(() => {
       </div>
       
       <!-- Profile Picture treated as album cover -->
-      <div class="w-full md:w-72 lg:w-96 shrink-0 aspect-[3/4] relative group">
+      <div class="w-full md:w-80 lg:w-[450px] shrink-0 relative group">
+        <!-- Hard Shadow Base -->
         <div class="absolute inset-0 border-4 border-[#111] bg-[#0033FF] translate-x-4 translate-y-4"></div>
-        <img 
-          src="/self.jpeg" 
-          class="absolute inset-0 w-full h-full object-cover border-4 border-[#111] filter grayscale group-hover:grayscale-0 transition-all duration-700" 
-          alt="Profile"
-          onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
-        />
+        <!-- Image Container -->
+        <div class="relative border-4 border-[#111] bg-white overflow-hidden">
+          <img 
+            src="/self.jpeg" 
+            class="w-full h-auto block filter grayscale group-hover:grayscale-0 transition-all duration-700" 
+            alt="Profile"
+            onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
+          />
+        </div>
         <!-- Sticker -->
         <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FF3B00] rounded-full border-4 border-[#111] flex items-center justify-center animate-[spin_10s_linear_infinite]">
           <span class="text-white font-black text-xl transform -rotate-12">10+ YRS</span>
