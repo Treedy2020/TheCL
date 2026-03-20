@@ -6,58 +6,27 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #030712; /* slate-950 */
+  background-color: #EFECE6;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  color: #f8fafc;
+  color: #111;
 }
 
-.album-spin {
-  animation: spin 20s linear infinite;
-}
-
-.album-spin-paused {
-  animation-play-state: paused;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 隐藏滚动条但保留滚动 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #EFECE6;
+  border-left: 2px solid #111;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: #FF3B00;
+  border: 2px solid #111;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #0033FF;
 }

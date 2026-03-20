@@ -1,12 +1,6 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { works } from './works'
-
-const text = ref('你好，我是水何澹澹。欢迎来到我的配音作品集。')
-const isGenerating = ref(false)
-const mockAudio = ref('')
-const isPlaying = ref(false)
-const audioRef = ref(null)
 
 const categories = ['全部', ...new Set(works.map((w) => w.type))]
 const activeCategory = ref('全部')
@@ -16,209 +10,187 @@ const filteredWorks = computed(() => {
   return works.filter((w) => w.type === activeCategory.value)
 })
 
-function mockClone() {
-  if (!text.value.trim()) return
-  isGenerating.value = true
-  mockAudio.value = ''
-  isPlaying.value = false
-  
-  setTimeout(() => {
-    mockAudio.value = `${import.meta.env.BASE_URL}audio.wav`
-    isGenerating.value = false
-    // Auto play
-    setTimeout(() => {
-      if (audioRef.value) {
-        audioRef.value.play().catch(e => console.log('Autoplay prevented', e))
-      }
-    }, 100)
-  }, 1500)
-}
+const PAGE_SIZE = 6
+const visibleCount = ref(PAGE_SIZE)
+const loadMoreRef = ref(null)
+let observer
 
-function togglePlay() {
-  if (!audioRef.value) return
-  if (isPlaying.value) {
-    audioRef.value.pause()
-  } else {
-    audioRef.value.play()
+const displayedWorks = computed(() => filteredWorks.value.slice(0, visibleCount.value))
+const hasMoreWorks = computed(() => visibleCount.value < filteredWorks.value.length)
+
+function loadMoreWorks() {
+  if (hasMoreWorks.value) {
+    visibleCount.value += PAGE_SIZE
   }
 }
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) loadMoreWorks()
+    },
+    { rootMargin: '200px' }
+  )
+  if (loadMoreRef.value) observer.observe(loadMoreRef.value)
+})
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
 
 <template>
-  <div class="relative min-h-screen bg-[#050505] text-white selection:bg-white/30 pb-32">
-    <!-- Ambient Background -->
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div class="absolute -left-[20%] -top-[10%] h-[70vh] w-[70vw] rounded-full bg-indigo-900/20 blur-[120px]" />
-      <div class="absolute -right-[10%] top-[40%] h-[50vh] w-[50vw] rounded-full bg-cyan-900/20 blur-[100px]" />
-    </div>
-
-    <main class="mx-auto max-w-6xl px-6 pt-12 lg:flex lg:gap-16 lg:pt-24">
+  <div class="min-h-screen bg-[#EFECE6] text-[#111] font-sans selection:bg-[#FF3B00] selection:text-white pb-32 overflow-x-hidden">
+    
+    <!-- Top Header / Editorial Profile -->
+    <header class="p-6 md:p-12 flex flex-col md:flex-row justify-between items-start gap-8">
+      <div class="max-w-2xl">
+        <p class="text-xs md:text-sm font-bold uppercase tracking-widest text-[#0033FF] mb-4">Voice Artist & Actor</p>
+        <h1 class="text-6xl md:text-8xl lg:text-[140px] font-black tracking-tighter leading-[0.85] uppercase" style="font-family: impact, ui-sans-serif, sans-serif;">
+          水何<br/><span class="text-[#FF3B00]">澹澹</span>
+        </h1>
+        <p class="mt-8 text-lg md:text-2xl font-medium leading-relaxed max-w-xl">
+          10余年声音探索之旅。游走于有声书、游戏、广播剧与影视之间。用不同的声线，折射色彩碰撞的艺术世界。
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">中文</span>
+          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">粤语</span>
+          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full bg-[#111] text-[#EFECE6] cursor-default">英语</span>
+          <span class="border-2 border-[#111] px-4 py-1.5 text-sm font-bold uppercase rounded-full hover:bg-[#111] hover:text-[#EFECE6] transition-colors cursor-default">法语</span>
+        </div>
+      </div>
       
-      <!-- Artist Profile (Album Cover side) -->
-      <aside class="fade-in-up lg:sticky lg:top-24 lg:w-[400px] lg:shrink-0 lg:self-start">
-        <div class="group relative aspect-square w-full overflow-hidden rounded-2xl shadow-2xl shadow-cyan-900/20">
-          <img 
-            src="/self.jpeg" 
-            alt="水何澹澹" 
-            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-          <div class="absolute bottom-6 left-6 right-6">
-            <p class="text-xs font-medium tracking-widest text-cyan-400">VOICE ARTIST</p>
-            <h1 class="mt-2 text-4xl font-light tracking-wide sm:text-5xl">水何澹澹</h1>
-          </div>
+      <!-- Profile Picture treated as album cover -->
+      <div class="w-full md:w-72 lg:w-96 shrink-0 aspect-[3/4] relative group">
+        <div class="absolute inset-0 border-4 border-[#111] bg-[#0033FF] translate-x-4 translate-y-4"></div>
+        <img 
+          src="/self.jpeg" 
+          class="absolute inset-0 w-full h-full object-cover border-4 border-[#111] filter grayscale group-hover:grayscale-0 transition-all duration-700" 
+          alt="Profile"
+          onerror="this.src='https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=800&auto=format&fit=crop'"
+        />
+        <!-- Sticker -->
+        <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FF3B00] rounded-full border-4 border-[#111] flex items-center justify-center animate-[spin_10s_linear_infinite]">
+          <span class="text-white font-black text-xl transform -rotate-12">10+ YRS</span>
         </div>
+      </div>
+    </header>
 
-        <div class="mt-8 space-y-6 text-white/70">
-          <p class="text-base font-light leading-relaxed">
-            10余年声音探索之旅。游走于有声书、游戏、广播剧与影视之间。
-            <br/><br/>
-            清澈而不失力量，细腻亦能承载宏大。用声音为纸上世界注入灵魂。
-          </p>
-          
-          <div class="flex flex-wrap gap-2 pt-2">
-            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">中文</span>
-            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">粤语</span>
-            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">英语</span>
-            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-light">法语</span>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Tracklist (Works) -->
-      <section class="fade-in-up mt-16 flex-1 lg:mt-0" style="animation-delay: 0.2s">
-        
-        <div class="mb-8 flex items-end justify-between border-b border-white/10 pb-4">
-          <h2 class="text-2xl font-light tracking-wide text-white/90">Selected Works</h2>
-          
-          <div class="hidden gap-4 sm:flex">
-            <button
-              v-for="category in categories"
-              :key="category"
-              @click="activeCategory = category"
-              :class="[
-                'text-sm transition-colors duration-300',
-                activeCategory === category ? 'text-cyan-400 font-medium' : 'text-white/40 hover:text-white/80'
-              ]"
-            >
-              {{ category }}
-            </button>
-          </div>
-        </div>
-        
-        <!-- Mobile categories -->
-        <div class="mb-6 flex gap-3 overflow-x-auto pb-2 sm:hidden scrollbar-hide">
-          <button
-            v-for="category in categories"
-            :key="`m-${category}`"
-            @click="activeCategory = category"
-            :class="[
-              'shrink-0 rounded-full px-4 py-1.5 text-xs transition-colors',
-              activeCategory === category ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'bg-white/5 text-white/60 border border-white/10'
-            ]"
-          >
-            {{ category }}
-          </button>
-        </div>
-
-        <div class="space-y-2">
-          <article
-            v-for="(work, index) in filteredWorks"
-            :key="work.title"
-            class="group flex flex-col gap-4 rounded-xl p-3 transition-colors hover:bg-white/5 sm:flex-row sm:items-center sm:p-4"
-          >
-            <div class="flex items-center gap-4 sm:w-1/2">
-              <span class="w-6 text-center text-xs font-light text-white/30">{{ String(index + 1).padStart(2, '0') }}</span>
-              <div class="h-12 w-12 shrink-0 overflow-hidden rounded bg-white/10">
-                <img :src="work.image" :alt="work.title" loading="lazy" class="h-full w-full object-cover opacity-80 grayscale transition duration-500 group-hover:grayscale-0 group-hover:opacity-100" />
-              </div>
-              <div class="min-w-0 flex-1">
-                <h3 class="truncate text-base font-medium text-white/90">{{ work.title }}</h3>
-                <p class="truncate text-xs text-cyan-400/80">{{ work.role }}</p>
-              </div>
-            </div>
-            
-            <div class="ml-10 flex flex-1 items-center justify-between sm:ml-0">
-              <p class="line-clamp-2 text-xs font-light text-white/50 sm:pr-4">
-                {{ work.description }}
-              </p>
-              
-              <div class="flex shrink-0 items-center gap-4 pl-2">
-                <span class="text-xs font-light text-white/30">{{ work.year }}</span>
-                <a 
-                  v-if="work.link"
-                  :href="work.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 opacity-0 transition-all hover:bg-white/20 hover:text-white group-hover:opacity-100 sm:flex"
-                  title="View Project"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-    </main>
-
-    <!-- Floating Interactive Player (AI Clone Mock) -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-black/60 p-4 backdrop-blur-2xl sm:p-6">
-      <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:flex-row">
-        
-        <!-- Vinyl Disk -->
-        <div class="hidden shrink-0 sm:block">
-          <div :class="['relative h-14 w-14 overflow-hidden rounded-full border border-white/20 bg-zinc-900', isPlaying ? 'album-spin' : 'album-spin-paused']">
-            <div class="absolute inset-2 rounded-full border border-white/5" />
-            <div class="absolute inset-4 rounded-full border border-white/5" />
-            <div class="absolute inset-[22px] rounded-full bg-cyan-500/80" />
-            <div class="absolute inset-0 bg-[conic-gradient(from_90deg_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%,rgba(255,255,255,0.1)_100%)] mix-blend-overlay" />
-          </div>
-        </div>
-
-        <div class="flex-1 w-full space-y-2">
-          <div class="flex items-center justify-between px-1">
-            <span class="text-xs font-medium text-cyan-400">AI 声线体验</span>
-            <span class="text-[10px] text-white/40">Powered by OpenClaw Mock</span>
-          </div>
-          <div class="flex w-full items-center gap-3">
-            <input 
-              v-model="text"
-              type="text"
-              placeholder="输入文本，倾听她的声音..."
-              class="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-light text-white outline-none transition focus:border-cyan-500/50 focus:bg-white/10"
-              @keyup.enter="mockClone"
-            />
-            <button 
-              @click="mockClone"
-              :disabled="isGenerating"
-              class="shrink-0 flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition hover:bg-cyan-50 disabled:opacity-50"
-            >
-              <svg v-if="isGenerating" class="h-4 w-4 animate-spin text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-              <span v-else>Generate</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Audio Player Controls -->
-        <div v-if="mockAudio" class="flex shrink-0 items-center justify-center sm:pl-4">
-          <button @click="togglePlay" class="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-500 text-black transition hover:scale-105 hover:bg-cyan-400">
-            <!-- Play/Pause Icon -->
-            <svg v-if="!isPlaying" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="ml-1"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
-          <audio 
-            ref="audioRef" 
-            :src="mockAudio" 
-            @play="isPlaying = true" 
-            @pause="isPlaying = false" 
-            @ended="isPlaying = false" 
-            class="hidden" 
-          />
-        </div>
-
+    <!-- Marquee Tape -->
+    <div class="w-full overflow-hidden border-y-4 border-[#111] bg-[#FF3B00] text-[#EFECE6] py-3 flex items-center whitespace-nowrap mt-12 md:mt-24">
+      <div class="animate-marquee font-black uppercase text-2xl tracking-widest flex gap-8">
+        <span>AUDIO BOOKS</span><span>•</span>
+        <span>GAMING VOICES</span><span>•</span>
+        <span>RADIO DRAMA</span><span>•</span>
+        <span>FILM & TV DUBBING</span><span>•</span>
+        <span>AUDIO BOOKS</span><span>•</span>
+        <span>GAMING VOICES</span><span>•</span>
+        <span>RADIO DRAMA</span><span>•</span>
+        <span>FILM & TV DUBBING</span><span>•</span>
+        <span>AUDIO BOOKS</span><span>•</span>
+        <span>GAMING VOICES</span><span>•</span>
+        <span>RADIO DRAMA</span><span>•</span>
+        <span>FILM & TV DUBBING</span><span>•</span>
       </div>
     </div>
+
+    <!-- Works Grid Section -->
+    <main class="p-6 md:p-12 mt-12">
+      <!-- Filter -->
+      <div class="flex flex-wrap gap-3 mb-16">
+        <button
+          v-for="category in categories"
+          :key="category"
+          @click="activeCategory = category; visibleCount = PAGE_SIZE"
+          :class="[
+            'px-6 py-2 rounded-full text-base font-black uppercase transition-all duration-300 border-4',
+            activeCategory === category 
+              ? 'bg-[#0033FF] border-[#0033FF] text-white' 
+              : 'border-[#111] text-[#111] hover:bg-[#111] hover:text-[#EFECE6]'
+          ]"
+        >
+          {{ category }}
+        </button>
+      </div>
+
+      <!-- Asymmetric / Brutalist Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+        <article
+          v-for="(work, index) in displayedWorks"
+          :key="work.title"
+          class="group relative"
+        >
+          <!-- Image Block -->
+          <div class="relative w-full aspect-[4/3]">
+            <!-- Hard Shadow Base -->
+            <div class="absolute inset-0 border-4 border-[#111] bg-[#111] translate-x-3 translate-y-3 transition-transform duration-300 group-hover:translate-x-5 group-hover:translate-y-5"></div>
+            <!-- Image Container -->
+            <div class="absolute inset-0 border-4 border-[#111] bg-[#FF3B00] overflow-hidden">
+              <img 
+                :src="work.image" 
+                :alt="work.title" 
+                loading="lazy"
+                class="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-105 transition-all duration-700"
+              />
+              
+              <!-- Hover Overlay for Link -->
+              <a v-if="work.link" :href="work.link" target="_blank" class="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-sm">
+                <span class="bg-[#EFECE6] text-[#111] px-6 py-3 font-black text-lg rounded-full border-4 border-[#111] flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                  PLAY / VIEW 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                </span>
+              </a>
+            </div>
+            
+            <!-- Type Tag -->
+            <div class="absolute -left-2 top-6 bg-[#0033FF] text-white px-4 py-1 font-black text-sm border-2 border-[#111] uppercase rotate-[-2deg]">
+              {{ work.type }}
+            </div>
+            <!-- Year Tag -->
+            <div class="absolute -right-2 bottom-6 bg-[#FF3B00] text-white px-4 py-1 font-black text-xl border-2 border-[#111] rotate-[3deg]">
+              '{{ String(work.year).slice(2) }}
+            </div>
+          </div>
+          
+          <!-- Typography Info -->
+          <div class="mt-8 pr-4">
+            <h3 class="text-3xl font-black leading-none mb-3 uppercase tracking-tight">{{ work.title }}</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="px-2 py-0.5 bg-[#111] text-[#EFECE6] text-xs font-bold uppercase rounded-sm">ROLE</span>
+              <span class="font-bold text-[#FF3B00] text-lg">{{ work.role }}</span>
+            </div>
+            <p class="text-base font-medium text-[#444] leading-relaxed line-clamp-3">
+              {{ work.description }}
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Load More / End Marker -->
+      <div ref="loadMoreRef" class="mt-24 pt-12 border-t-4 border-[#111] flex justify-center">
+        <button
+          v-if="hasMoreWorks"
+          @click="loadMoreWorks"
+          class="border-4 border-[#111] bg-[#FF3B00] text-white px-10 py-4 font-black text-xl hover:bg-[#111] hover:text-[#EFECE6] transition-colors shadow-[6px_6px_0px_#111] hover:shadow-[2px_2px_0px_#111] hover:translate-x-1 hover:translate-y-1"
+        >
+          LOAD MORE ARCHIVES
+        </button>
+        <div v-else class="text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-[#111] mb-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 3-3 4 4 4-4 3 3z"/></svg>
+          <p class="text-sm font-black text-[#111] tracking-[0.3em] uppercase">NO MORE TRACKS</p>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
+
+<style>
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 10s linear infinite;
+  min-width: 200%;
+}
+</style>
