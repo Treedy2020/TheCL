@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { works } from './works'
 
 const text = ref('你好，我是水何澹澹。欢迎来到我的配音作品展示站。')
@@ -13,6 +13,20 @@ const filteredWorks = computed(() => {
   if (activeCategory.value === '全部') return works
   return works.filter((w) => w.type === activeCategory.value)
 })
+
+const PAGE_SIZE = 6
+const visibleCount = ref(PAGE_SIZE)
+const loadMoreRef = ref(null)
+let observer
+
+const displayedWorks = computed(() => filteredWorks.value.slice(0, visibleCount.value))
+const hasMoreWorks = computed(() => visibleCount.value < filteredWorks.value.length)
+
+function loadMoreWorks() {
+  if (hasMoreWorks.value) {
+    visibleCount.value += PAGE_SIZE
+  }
+}
 
 const navItems = [
   { id: 'intro', label: '介绍' },
@@ -32,6 +46,26 @@ function mockClone() {
     isGenerating.value = false
   }, 1200)
 }
+
+watch(activeCategory, () => {
+  visibleCount.value = PAGE_SIZE
+})
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      const target = entries[0]
+      if (target?.isIntersecting) loadMoreWorks()
+    },
+    { rootMargin: '200px 0px 200px 0px' }
+  )
+
+  if (loadMoreRef.value) observer.observe(loadMoreRef.value)
+})
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
 
 <template>
@@ -127,11 +161,11 @@ function mockClone() {
 
           <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <article
-              v-for="work in filteredWorks"
+              v-for="work in displayedWorks"
               :key="work.title"
               class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(15,23,42,0.08)]"
             >
-              <img :src="work.image" :alt="work.title" class="h-44 w-full object-cover" />
+              <img :src="work.image" :alt="work.title" loading="lazy" decoding="async" class="h-44 w-full object-cover" />
               <div class="p-4">
                 <p class="text-xs text-sky-600">{{ work.year }} · {{ work.type }}</p>
                 <h3 class="mt-1 font-semibold text-slate-900">{{ work.title }}</h3>
@@ -148,6 +182,17 @@ function mockClone() {
                 </a>
               </div>
             </article>
+          </div>
+
+          <div ref="loadMoreRef" class="mt-6 flex justify-center">
+            <button
+              v-if="hasMoreWorks"
+              @click="loadMoreWorks"
+              class="rounded-full bg-white px-4 py-2 text-sm text-slate-600 shadow-sm transition hover:bg-sky-50"
+            >
+              加载更多作品
+            </button>
+            <p v-else class="text-xs text-slate-400">已展示全部作品</p>
           </div>
         </section>
       </div>
