@@ -202,6 +202,74 @@ onBeforeUnmount(() => {
       </div>
     </header>
 
+    <!-- Partners / AI Models Marquee -->
+    <section class="max-w-7xl mx-auto px-6 md:px-12 mt-12 md:mt-16 xl:pl-32">
+      <div class="text-left mb-3">
+        <span class="text-xs md:text-sm font-black text-[#0033FF] uppercase tracking-widest border-l-4 border-[#FF3B00] pl-3">{{ isEn ? 'AI Voice Partners' : 'AI 语音模型训练合作' }}</span>
+      </div>
+      <div class="border-4 border-[#111] py-6 md:py-8 overflow-hidden relative bg-white shadow-[8px_8px_0px_#111]">
+        <div class="absolute top-0 left-0 w-12 md:w-20 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-12 md:w-20 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        
+        <div class="flex w-max animate-marquee hover:[animation-play-state:paused] items-center">
+          <!-- Set 1 -->
+          <div class="flex items-center gap-12 md:gap-24 px-6 md:px-12">
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">花小呗</span>
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">正太音 / 妩媚御姐<br/>温柔少御 / 活泼女友</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/HoYoverse_logo.svg" alt="米哈游" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/IFLYTEK_Logo.svg" alt="科大讯飞" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Tencent_Cloud_logo.svg" alt="腾讯云" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
+            </div>
+          </div>
+          <!-- Set 2 for seamless loop -->
+          <div class="flex items-center gap-12 md:gap-24 px-6 md:px-12">
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">花小呗</span>
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">正太音 / 妩媚御姐<br/>温柔少御 / 活泼女友</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/HoYoverse_logo.svg" alt="米哈游" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/IFLYTEK_Logo.svg" alt="科大讯飞" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
+              <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Tencent_Cloud_logo.svg" alt="腾讯云" class="h-full object-contain" />
+              </div>
+              <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tracklist (The Album Structure) -->
     <main id="works" class="max-w-7xl mx-auto px-6 md:px-12 mt-16 md:mt-24 xl:pl-32 scroll-mt-12">
       <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b-4 md:border-b-8 border-[#111] pb-4 mb-8 md:mb-12 gap-4">
