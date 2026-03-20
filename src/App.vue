@@ -10,11 +10,14 @@ const t = computed(() => ({
   desc: isEn.value 
     ? 'Over 10 years of sonic exploration. Wandering through audiobooks, games, radio dramas, and films. Using different voices to reflect an artistic world of colliding colors.'
     : '10余年声音探索之旅。游走于有声书、游戏、广播剧与影视之间。用不同的声线，折射色彩碰撞的艺术世界。',
+  aiDesc: isEn.value 
+    ? 'Embracing the era of generative AI. Exploring the resonance between human emotion and algorithmic logic, redefining the boundary of vocal art.'
+    : '拥抱生成式 AI 时代，探索人类情感与算法逻辑的共振，重新定义声音艺术的边界。',
   langs: isEn.value ? ['Mandarin', 'Cantonese', 'English', 'French'] : ['中文', '粤语', '英语', '法语'],
   adv: isEn.value ? 'Parental Advisory: Explicit Talent' : '听觉警告：极度才华',
   side: isEn.value 
-    ? 'SIDE A: Professional Dubbing / SIDE B: Artistic Expression. 10+ Years of Sonic Exploration.' 
-    : 'A面：专业配音 / B面：艺术表达。10年以上声音探索，横跨游戏、影视与文学。',
+    ? 'SIDE A: Professional Dubbing / SIDE B: Artistic Expression / SIDE C: AI Resonance' 
+    : 'A面：专业配音 / B面：艺术表达 / C面：AI 共振',
   artist: isEn.value ? 'Artist' : '艺术家',
   format: isEn.value ? 'Format' : '发行格式',
   tracklist: isEn.value ? 'Tracklist' : '作品曲目',
@@ -102,18 +105,18 @@ onBeforeUnmount(() => {
     <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-6 items-center">
       <div class="h-24 w-0.5 bg-[#111] opacity-20"></div>
       
-      <button @click="goSection('intro')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
-        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</span>
+      <button @click="goSection('intro')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
+        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#0033FF] transition-colors" style="text-orientation: upright">{{ t.navIntro }}</span>
         <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
       </button>
       
-      <button @click="goSection('works')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
-        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</span>
+      <button @click="goSection('works')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
+        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#FF3B00] transition-colors" style="text-orientation: upright">{{ t.navWorks }}</span>
         <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#FF3B00] group-hover:border-[#FF3B00] transition-colors"></div>
       </button>
       
-      <button @click="goSection('contact')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl">
-        <span class="text-[10px] font-black tracking-[0.2em] uppercase text-[#111] group-hover:text-[#0033FF] transition-colors">{{ t.navContact }}</span>
+      <button @click="goSection('contact')" class="group flex items-center gap-4 rotate-180" style="writing-mode: vertical-rl; transform: rotate(180deg)">
+        <span class="text-xs font-black tracking-[0.2em] text-[#111] group-hover:text-[#0033FF] transition-colors" style="text-orientation: upright">{{ t.navContact }}</span>
         <div class="w-2 h-2 rounded-full border-2 border-[#111] group-hover:bg-[#0033FF] group-hover:border-[#0033FF] transition-colors"></div>
       </button>
       
@@ -169,6 +172,9 @@ onBeforeUnmount(() => {
             <div class="space-y-4">
               <p class="text-lg md:text-xl font-bold italic leading-tight border-l-4 md:border-l-8 border-[#FF3B00] pl-4 md:pl-6 py-1 md:py-2 text-[#222]">
                 {{ t.desc }}
+              </p>
+              <p class="text-lg md:text-xl font-bold italic leading-tight border-l-4 md:border-l-8 border-[#0033FF] pl-4 md:pl-6 py-1 md:py-2 text-[#222]">
+                {{ t.aiDesc }}
               </p>
               <p class="text-sm md:text-base font-medium text-[#555] max-w-xl">
                 {{ t.side }}
