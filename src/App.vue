@@ -91,8 +91,23 @@ onBeforeUnmount(() => {
 <template>
   <div class="min-h-screen bg-[#EFECE6] text-[#111] font-sans selection:bg-[#FF3B00] selection:text-white pb-32 overflow-x-hidden relative">
     
-    <!-- Top Nav / Lang Switch -->
-    <nav class="absolute top-0 right-0 p-6 flex justify-end z-50">
+    <!-- Mobile Top Nav -->
+    <div class="sticky top-0 left-0 right-0 z-40 bg-[#EFECE6]/90 backdrop-blur-md border-b-4 border-[#111] xl:hidden flex justify-between items-center px-4 py-3 shadow-md">
+      <div class="flex items-center gap-4">
+        <button @click="goSection('intro')" class="text-sm font-black tracking-widest hover:text-[#0033FF] transition-colors">{{ t.navIntro }}</button>
+        <button @click="goSection('works')" class="text-sm font-black tracking-widest hover:text-[#FF3B00] transition-colors">{{ t.navWorks }}</button>
+        <button @click="goSection('contact')" class="text-sm font-black tracking-widest hover:text-[#0033FF] transition-colors">{{ t.navContact }}</button>
+      </div>
+      <button 
+        @click="isEn = !isEn" 
+        class="border-2 border-[#111] bg-white px-2 py-0.5 text-xs font-black uppercase hover:bg-[#FF3B00] hover:text-white transition-colors"
+      >
+        {{ isEn ? '中' : 'EN' }}
+      </button>
+    </div>
+
+    <!-- Top Nav / Lang Switch (Desktop only, mobile moved to sticky bar) -->
+    <nav class="absolute top-0 right-0 p-6 hidden xl:flex justify-end z-50">
       <button 
         @click="isEn = !isEn" 
         class="border-2 border-[#111] bg-white px-4 py-1 text-sm font-black uppercase hover:bg-[#FF3B00] hover:text-white transition-colors shadow-[4px_4px_0px_#111]"
