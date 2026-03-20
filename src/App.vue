@@ -222,19 +222,19 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">米哈游</span>
+                <img src="/logos/mihoyo.svg" alt="米哈游 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">科大讯飞</span>
+                <img src="/logos/iflytek.png" alt="科大讯飞 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">腾讯云</span>
+                <img src="/logos/tencent-cloud.png" alt="腾讯云 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
             </div>
@@ -249,19 +249,19 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">米哈游</span>
+                <img src="/logos/mihoyo.svg" alt="米哈游 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">ASMR 专属定制</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">科大讯飞</span>
+                <img src="/logos/iflytek.png" alt="科大讯飞 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#FF3B00] uppercase tracking-widest text-center">双人闲聊语料库</span>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 group cursor-pointer">
               <div class="h-10 md:h-12 flex items-center justify-center group-hover:-translate-y-1 transition-transform">
-                <span class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#111]">腾讯云</span>
+                <img src="/logos/tencent-cloud.png" alt="腾讯云 Logo" class="h-full w-auto object-contain" />
               </div>
               <span class="text-[10px] md:text-xs font-bold text-[#0033FF] uppercase tracking-widest text-center">深圳腾讯云女声助手</span>
             </div>
