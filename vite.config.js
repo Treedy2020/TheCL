@@ -5,7 +5,7 @@ import { resolve } from 'node:path'
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
-  base: '/TheCL/',
+  base: './',
   server: {
     port: 3000,
     open: true
